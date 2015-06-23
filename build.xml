@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="JavaCard NDEF Applet" default="dist" basedir=".">
+  <description>Builds the project.</description>
+  <target name="dist" description="generate the distribution">
+    <tstamp/>
+    <ant dir="ext/ant"/>
+    <taskdef name="javacard" classname="pro.javacard.ant.JavaCard" classpath="ext/ant/ant-javacard.jar"/>
+    <javacard>
+      <cap output="javacard-ndef.cap" sources="src" version="1.0">
+        <applet class="org.aispring.javacard.ndef.NdefApplet" aid="D2760000850101"/>
+      </cap>
+    </javacard>
+  </target>
+  <target name="clean" description="clean up">
+    <delete dir="javacard-ndef.cap"/>
+  </target>
+</project>
