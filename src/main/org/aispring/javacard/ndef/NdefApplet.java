@@ -3,7 +3,7 @@ package org.aispring.javacard.ndef;
 import javacard.framework.*;
 
 /**
- * Applet implementing an NDEF type 4 tag
+ * \brief Applet implementing an NDEF type 4 tag
  *
  * Implemented to comply with:
  *   NFC Forum
