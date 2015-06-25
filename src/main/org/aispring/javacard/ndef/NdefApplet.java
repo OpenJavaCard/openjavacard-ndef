@@ -133,14 +133,14 @@ public final class NdefApplet extends Applet {
     private short selectedFile;
 
     /** NDEF capability file contents */
-    private byte[] ndefCaps;
+    private byte[] capsFile;
     /** NDEF data file contents */
-    private byte[] ndefData;
+    private byte[] dataFile;
 
     /** NDEF data read access policy */
-    private byte ndefReadAccess;
+    private byte dataReadAccess;
     /** NDEF data write access policy */
-    private byte ndefWriteAccess;
+    private byte dataWriteAccess;
 
     /**
      * Installs an NDEF applet
@@ -247,12 +247,12 @@ public final class NdefApplet extends Applet {
         }
 
         // set up access
-        ndefReadAccess = dataReadAccess;
-        ndefWriteAccess = dataWriteAccess;
+        this.dataReadAccess = dataReadAccess;
+        this.dataWriteAccess = dataWriteAccess;
 
         // create file contents
-        ndefCaps = makeCaps(dataSize, dataReadAccess, dataWriteAccess);
-        ndefData = makeData(dataSize, initBuf, initOff, initLen);
+        capsFile = makeCaps(dataSize, dataReadAccess, dataWriteAccess);
+        dataFile = makeData(dataSize, initBuf, initOff, initLen);
     }
 
     /**
@@ -342,8 +342,8 @@ public final class NdefApplet extends Applet {
         short offNFC = (short)(off + CC_OFF_NDEF_FILE_CONTROL + 2);
         short offR = (short)(offNFC + FC_OFF_READ_ACCESS);
         short offW = (short)(offNFC + FC_OFF_WRITE_ACCESS);
-        caps[offR] = fixAccess(ndefData, ndefReadAccess);
-        caps[offW] = fixAccess(ndefData, ndefWriteAccess);
+        caps[offR] = fixAccess(dataFile, dataReadAccess);
+        caps[offW] = fixAccess(dataFile, dataWriteAccess);
     }
 
     /**
@@ -609,12 +609,12 @@ public final class NdefApplet extends Applet {
         byte access = FILE_ACCESS_NONE;
         // select relevant data
         if(fileId == FILEID_NDEF_CAPABILITIES) {
-            file = ndefCaps;
+            file = capsFile;
             access = FILE_ACCESS_OPEN;
         }
         if(fileId == FILEID_NDEF_DATA) {
-            file = ndefData;
-            access = ndefReadAccess;
+            file = dataFile;
+            access = dataReadAccess;
         }
         // check that we got anything
         if(file == null) {
@@ -650,8 +650,8 @@ public final class NdefApplet extends Applet {
         }
         // select relevant data
         if(fileId == FILEID_NDEF_DATA) {
-            file = ndefData;
-            access = ndefWriteAccess;
+            file = dataFile;
+            access = dataWriteAccess;
         }
         // check that we got something
         if(file == null) {
