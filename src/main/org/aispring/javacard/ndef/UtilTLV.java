@@ -22,7 +22,7 @@ package org.aispring.javacard.ndef;
 import javacard.framework.Util;
 
 /**
- * \brief Utility class for TLV-realted operations.
+ * \brief Utility class for TLV-related operations.
  *
  * This code originally comes from IsoApplet by Philip Wendland.
  *
