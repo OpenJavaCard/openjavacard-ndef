@@ -79,6 +79,24 @@ The following TLV records are supported:
    32767 bytes may be requested. Installation will
    fail when sufficient memory is not available.
 
+### Related Projects
+
+I use [GlobalPlatformPro](https://github.com/martinpaljak/GlobalPlatformPro) by [Martin Paljak](https://github.com/martinpaljak/)
+for managing my cards during development. It works well with my NXP and Gemalto cards.
+
+JavaCard compilation and conversion is done using [ant-javacard](https://github.com/martinpaljak/ant-javacard) in this project.
+It is simple but complete and therefore highly recommended for new JavaCard projects.
+
+This project contains some code from the excellent [IsoApplet]|(https://github.com/philipWendland/IsoApplet) by Philip Wendland.
+If you are looking for a modern PKCS#11 applet that works well with OpenSC then this should be your choice.
+
+### Recommended Android Apps
+
+I can recommend [NFC TagInfo](https://play.google.com/store/apps/details?id=com.nxp.taginfolite)
+and [NFC TagWriter](https://play.google.com/store/apps/details?id=com.nxp.nfc.tagwriter) by NXP
+for interacting with this applet, even though they are proprietary. Both apps are quite
+professional and work well. TagInfo is great for debugging because it shows a lot of detail.
+
 ### Legal
 
 Copyright 2015 Ingo Albrecht
