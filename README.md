@@ -51,7 +51,7 @@ tools such as "gp.jar" and "gpj.jar" you can do it like this:
 
 The following TLV records are supported:
 
-**DATA INITIAL [0x10 <byte len> <bytes data>]**
+**DATA INITIAL [0x10 [byte len] [bytes data]]**
 
    Will initialize the NDEF data file with the provided
    data, which should be a valid NDEF record without
@@ -66,14 +66,14 @@ The following TLV records are supported:
    accomodate the record. If you want more memory you
    should override the size using DATA SIZE.
 
-**DATA ACCESS [0x11 0x02 <byte read> <byte write>]**
+**DATA ACCESS [0x11 0x02 [byte read] [byte write]]**
 
    Provides access policies for NDEF data read and write.
 
    Standard values: 0x00 (open access), 0xFF (no access)
    Proprietary values: 0xF0 (contact-only), 0xF1 (write-once)
 
-**DATA SIZE [0x12 0x02 <short size>]**
+**DATA SIZE [0x12 0x02 [short size]]**
 
    Specifies the size of the NDEF data file. Up to
    32767 bytes may be requested. Installation will
