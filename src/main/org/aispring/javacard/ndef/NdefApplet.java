@@ -558,9 +558,6 @@ public final class NdefApplet extends Applet {
      * @return a fixed access policy
      */
     private byte fixAccess(byte[] data, byte access) {
-        // get protocol and media information
-        byte protocol = APDU.getProtocol();
-        byte media = (byte)(protocol & APDU.PROTOCOL_MEDIA_MASK);
         // figure out the right policy
         switch(access) {
             // by default we pass through
