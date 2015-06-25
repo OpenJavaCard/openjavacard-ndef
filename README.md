@@ -91,7 +91,7 @@ for managing my cards during development. It works well with my NXP and Gemalto 
 JavaCard compilation and conversion is done using [ant-javacard](https://github.com/martinpaljak/ant-javacard) in this project.
 It is simple but complete and therefore highly recommended for new JavaCard projects.
 
-This project contains some code from the excellent [IsoApplet]|(https://github.com/philipWendland/IsoApplet) by Philip Wendland.
+This project contains some code from the excellent [IsoApplet](https://github.com/philipWendland/IsoApplet) by Philip Wendland.
 If you are looking for a modern PKCS#11 applet that works well with OpenSC then this should be your choice.
 
 ### Recommended Android Apps
