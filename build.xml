@@ -6,7 +6,7 @@
     <ant dir="ext/ant"/>
     <taskdef name="javacard" classname="pro.javacard.ant.JavaCard" classpath="ext/ant/ant-javacard.jar"/>
     <javacard>
-      <cap output="javacard-ndef.cap" sources="src" version="1.0">
+      <cap output="javacard-ndef.cap" sources="src/main" version="1.0">
         <applet class="org.aispring.javacard.ndef.NdefApplet" aid="D2760000850101"/>
       </cap>
     </javacard>
