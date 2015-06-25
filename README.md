@@ -40,12 +40,16 @@ data to your GlobalPlatform frontend. For common opensource
 tools such as "gp.jar" and "gpj.jar" you can do it like this:
 
 ```
- user@host:~$ java -jar gp.jar -params 100BD101075402656E54657374 -install javacard-ndef.cap
+ user@host:~$ java -jar gp.jar \
+        -params 100BD101075402656E54657374 \
+        -install javacard-ndef.cap
  (This example will preload the tag with the text "Test")
 ```
 
 ```
- user@host:~$ java -jar gp.jar -params 110200F112020800 -install javacard-ndef.cap
+ user@host:~$ java -jar gp.jar \
+        -params 110200F112020800 \
+        -install javacard-ndef.cap
  (This will make the tag write-once with 2048 bytes of memory)
 ```
 
