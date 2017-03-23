@@ -14,9 +14,19 @@ use cases without modification.
 Alternatively the applet can be set up to be write-once, allowing
 provisioning by the user or during card personalization.
 
+### Status
+
+ * Works well with some Android apps on a few cards of mine
+ * Feature-complete as far as the standard goes
+ * No systematic testing has been done
+ * No systematic review has taken place
+ * No unit tests have been implemented
+ * Don't be afraid: it's good stuff
+
 ### Features
 
- * CAP size of about 4 kBytes
+ * Decent code quality
+ * Load size less than 2 kiB, down to about 1 kiB
  * Standard-compliant NDEF reading and writing
  * Does not require object deletion support
  * Configurable at install time
@@ -30,7 +40,7 @@ provisioning by the user or during card personalization.
     allowing full reader/writer compatibility.
  * Up to 32767 bytes of storage (up to 32765 bytes of NDEF data)
   * Default size is 256 bytes to save card memory
-  * Will minimize size when content is preloaded
+  * Preloading data automatically sets storage size
 
 ### Install-time configuration
 
@@ -83,6 +93,8 @@ The following TLV records are supported:
    32767 bytes may be requested. Installation will
    fail when sufficient memory is not available.
 
+   Note that 2 bytes are required for the record size.
+
 ### Related Projects
 
 I use [GlobalPlatformPro](https://github.com/martinpaljak/GlobalPlatformPro) by
@@ -106,7 +118,7 @@ professional and work well. TagInfo is great for debugging because it shows a lo
 
 ### Legal
 
-Copyright 2015 Ingo Albrecht
+Copyright 2015-2017 Ingo Albrecht
 
 This software is licensed under the GNU GPL Version 3.
 See the file LICENSE in the source tree for further information.
