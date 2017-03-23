@@ -156,7 +156,7 @@ public final class NdefApplet extends Applet {
      * @param off offset of install data in buf
      * @param len length of install data in buf
      */
-    public static void install(byte[] buf, short off, byte len) {
+    public static final void install(byte[] buf, short off, byte len) {
         short pos = off;
         // find AID
         byte  lenAID = buf[pos++];
@@ -263,7 +263,7 @@ public final class NdefApplet extends Applet {
      * @param dataWriteAccess to put in the CC
      * @return an array for use as the CC file
      */
-    private byte[] makeCaps(short dataSize,
+    private final byte[] makeCaps(short dataSize,
                             byte dataReadAccess, byte dataWriteAccess) {
         short capsLen = (short)(CC_LEN_HEADER + 2 + CC_LEN_NDEF_FILE_CONTROL);
         byte[] caps = new byte[capsLen];
@@ -309,7 +309,7 @@ public final class NdefApplet extends Applet {
      * @param initLen length of initial data in buffer
      * @return an array for use as the data file
      */
-    private byte[] makeData(short dataSize, byte[] init, short initOff, short initLen) {
+    private final byte[] makeData(short dataSize, byte[] init, short initOff, short initLen) {
         byte[] data = new byte[dataSize];
 
         // initialize from init, if provided
@@ -338,7 +338,7 @@ public final class NdefApplet extends Applet {
      * @param off offset of CC in buffer
      * @param len of CC in buffer
      */
-    private void fixCaps(byte[] caps, short off, short len) {
+    private final void fixCaps(byte[] caps, short off, short len) {
         short offNFC = (short)(off + CC_OFF_NDEF_FILE_CONTROL + 2);
         short offR = (short)(offNFC + FC_OFF_READ_ACCESS);
         short offW = (short)(offNFC + FC_OFF_WRITE_ACCESS);
@@ -358,7 +358,7 @@ public final class NdefApplet extends Applet {
      * @throws ISOException on error
      */
     @Override
-    public void process(APDU apdu) throws ISOException {
+    public final void process(APDU apdu) throws ISOException {
         byte[] buffer = apdu.getBuffer();
         byte ins = buffer[ISO7816.OFFSET_INS];
 
@@ -409,7 +409,7 @@ public final class NdefApplet extends Applet {
      * @param apdu to process
      * @throws ISOException on error
      */
-    private void processSelect(APDU apdu) throws ISOException {
+    private final void processSelect(APDU apdu) throws ISOException {
         byte[] buffer = apdu.getBuffer();
         byte p1 = buffer[ISO7816.OFFSET_P1];
         byte p2 = buffer[ISO7816.OFFSET_P2];
@@ -454,7 +454,7 @@ public final class NdefApplet extends Applet {
      * @param apdu to process
      * @throws ISOException on error
      */
-    private void processReadBinary(APDU apdu) throws ISOException {
+    private final void processReadBinary(APDU apdu) throws ISOException {
         byte[] buffer = apdu.getBuffer();
 
         // access the file
@@ -509,7 +509,7 @@ public final class NdefApplet extends Applet {
      * @param apdu to process
      * @throws ISOException on error
      */
-    private void processUpdateBinary(APDU apdu) throws ISOException {
+    private final void processUpdateBinary(APDU apdu) throws ISOException {
         byte[] buffer = apdu.getBuffer();
 
         // access the file
@@ -547,7 +547,7 @@ public final class NdefApplet extends Applet {
      * @param access policy to be checked
      * @return true if access granted, false otherwise
      */
-    private boolean checkAccess(byte[] data, byte access) {
+    private final boolean checkAccess(byte[] data, byte access) {
         // get protocol and media information
         byte protocol = APDU.getProtocol();
         byte media = (byte)(protocol & APDU.PROTOCOL_MEDIA_MASK);
@@ -576,7 +576,7 @@ public final class NdefApplet extends Applet {
      * @param access policy for to fix
      * @return a fixed access policy
      */
-    private byte fixAccess(byte[] data, byte access) {
+    private final byte fixAccess(byte[] data, byte access) {
         // figure out the right policy
         switch(access) {
             // by default we pass through
@@ -604,7 +604,7 @@ public final class NdefApplet extends Applet {
      * @return data array of the file
      * @throws ISOException on error
      */
-    private byte[] accessFileForRead(short fileId) throws ISOException {
+    private final byte[] accessFileForRead(short fileId) throws ISOException {
         byte[] file = null;
         byte access = FILE_ACCESS_NONE;
         // select relevant data
@@ -641,7 +641,7 @@ public final class NdefApplet extends Applet {
      * @return data array of the file
      * @throws ISOException on error
      */
-    private byte[] accessFileForWrite(short fileId) throws ISOException {
+    private final byte[] accessFileForWrite(short fileId) throws ISOException {
         byte[] file = null;
         byte access = FILE_ACCESS_NONE;
         // CC can not be written
