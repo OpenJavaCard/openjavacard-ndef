@@ -1,17 +1,89 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="JavaCard NDEF Applet" default="dist" basedir=".">
-  <description>Builds the project.</description>
-  <target name="dist" description="generate the distribution">
-    <tstamp/>
-    <ant dir="ext/ant"/>
-    <taskdef name="javacard" classname="pro.javacard.ant.JavaCard" classpath="ext/ant/ant-javacard.jar"/>
-    <javacard>
-      <cap output="javacard-ndef.cap" sources="src/main" version="1.0">
-        <applet class="org.aispring.javacard.ndef.NdefApplet" aid="D2760000850101"/>
-      </cap>
-    </javacard>
-  </target>
-  <target name="clean" description="clean up">
-    <delete dir="javacard-ndef.cap"/>
-  </target>
+<project name="javacard-ndef"
+         default="compile"
+         basedir=".">
+
+    <description>JavaCard implementation of an NDEF Type 4 tag</description>
+
+    <!-- Use proguard -->
+    <taskdef classpath="/opt/proguard/lib/proguard.jar"
+             resource="proguard/ant/task.properties"/>
+
+    <!-- Main target -->
+    <target name="compile"
+            description="compile everything">
+
+        <tstamp/>
+
+        <!-- Build ant-javacard -->
+        <ant dir="ext/ant"/>
+
+        <!-- Use ant-javacard -->
+        <taskdef name="javacard"
+                 classpath="ext/ant/ant-javacard.jar"
+                 classname="pro.javacard.ant.JavaCard"/>
+
+        <!-- Directories for class files -->
+        <mkdir dir="build/classes/original"/>
+        <mkdir dir="build/classes/proguard"/>
+
+        <!-- Compile java code -->
+        <javac srcdir="src/main"
+               destdir="build/classes/original"
+               classpath="/opt/javacard-2.2.2/lib/api.jar"
+               includeantruntime="false"
+               source="1.5"
+               target="1.5">
+            <compilerarg value="-Xlint"/>
+            <compilerarg value="-Xlint:-options"/>
+            <compilerarg value="-Xlint:-serial"/>
+        </javac>
+
+        <!-- Run the class files through proguard -->
+        <proguard>
+            -verbose
+            -printseeds
+            -printusage
+            -printmapping
+            -applymapping proguard.map
+            -injars build/classes/original
+            -outjars build/classes/proguard
+            -libraryjars /opt/javacard-2.2.2/lib/api.jar
+            -dontwarn java.lang.Class
+            -allowaccessmodification
+            -keep public class * implements javacard.framework.Applet {
+                public static void install(byte[], short, byte);
+            }
+        </proguard>
+
+        <!-- Directory for CAP files -->
+        <mkdir dir="build/javacard"/>
+
+        <!-- Unobfuscated CAP file -->
+        <javacard>
+            <cap output="build/javacard/javacard-ndef-original.cap"
+                 classes="build/classes/original"
+                 version="1.0">
+                <applet aid="D2760000850101"
+                        class="org.aispring.javacard.ndef.NdefApplet"/>
+            </cap>
+        </javacard>
+
+        <!-- Obfuscated CAP file -->
+        <javacard>
+            <cap output="build/javacard/javacard-ndef-proguard.cap"
+                 classes="build/classes/proguard"
+                 version="1.0">
+                <applet aid="D2760000850101"
+                        class="org.aispring.javacard.ndef.NdefApplet"/>
+            </cap>
+        </javacard>
+
+    </target>
+
+    <target name="clean"
+            description="clean up">
+        <delete dir="build"/>
+    </target>
+
 </project>
