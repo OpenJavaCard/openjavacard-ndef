@@ -130,17 +130,17 @@ public final class NdefApplet extends Applet {
 
 
     /** ID of currently selected file */
-    private short selectedFile;
+    private static short selectedFile;
 
     /** NDEF capability file contents */
-    private byte[] capsFile;
+    private static byte[] capsFile;
     /** NDEF data file contents */
-    private byte[] dataFile;
+    private static byte[] dataFile;
 
     /** NDEF data read access policy */
-    private byte dataReadAccess;
+    private static byte dataReadAccess;
     /** NDEF data write access policy */
-    private byte dataWriteAccess;
+    private static byte dataWriteAccess;
 
     /**
      * Installs an NDEF applet
