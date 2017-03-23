@@ -190,9 +190,9 @@ public final class NdefApplet extends Applet {
      */
     protected NdefApplet(byte[] buf, short off, byte len) {
 
-        short dataSize = DEFAULT_NDEF_DATA_SIZE;
-        byte dataReadAccess = DEFAULT_NDEF_READ_ACCESS;
-        byte dataWriteAccess = DEFAULT_NDEF_WRITE_ACCESS;
+        short initSize = DEFAULT_NDEF_DATA_SIZE;
+        byte initReadAccess = DEFAULT_NDEF_READ_ACCESS;
+        byte initWriteAccess = DEFAULT_NDEF_WRITE_ACCESS;
         byte[] initBuf = null;
         short  initOff = 0;
         short  initLen = 0;
@@ -211,9 +211,9 @@ public final class NdefApplet extends Applet {
                 initLen = UtilTLV.decodeLengthField(buf, (short) (initTag + 1));
                 initOff = (short) (initTag + 1 + UtilTLV.getLengthFieldLength(initLen));
                 // restrict writing, can be overridden
-                dataWriteAccess = FILE_ACCESS_NONE;
+                initWriteAccess = FILE_ACCESS_NONE;
                 // adjust size, can be overridden
-                dataSize = (short) (2 + initLen);
+                initSize = (short) (2 + initLen);
             }
 
             // DATA ACCESS
@@ -223,8 +223,8 @@ public final class NdefApplet extends Applet {
                 if (accessLen != 2) {
                     ISOException.throwIt(ISO7816.SW_DATA_INVALID);
                 }
-                dataReadAccess = buf[(short) (tagAccess + 2)];
-                dataWriteAccess = buf[(short) (tagAccess + 3)];
+                initReadAccess = buf[(short) (tagAccess + 2)];
+                initWriteAccess = buf[(short) (tagAccess + 3)];
             }
 
             // DATA SIZE
@@ -234,8 +234,8 @@ public final class NdefApplet extends Applet {
                 if (sizeLen != 2) {
                     ISOException.throwIt(ISO7816.SW_DATA_INVALID);
                 }
-                dataSize = Util.getShort(buf, (short) (tagSize + 2));
-                if (dataSize < 0) {
+                initSize = Util.getShort(buf, (short) (tagSize + 2));
+                if (initSize < 0) {
                     ISOException.throwIt(ISO7816.SW_DATA_INVALID);
                 }
             }
@@ -243,16 +243,16 @@ public final class NdefApplet extends Applet {
 
         // squash write access if not supported
         if(!FEATURE_WRITING) {
-            dataWriteAccess = FILE_ACCESS_NONE;
+            initWriteAccess = FILE_ACCESS_NONE;
         }
 
         // set up access
-        this.dataReadAccess = dataReadAccess;
-        this.dataWriteAccess = dataWriteAccess;
+        dataReadAccess = initReadAccess;
+        dataWriteAccess = initWriteAccess;
 
         // create file contents
-        capsFile = makeCaps(dataSize, dataReadAccess, dataWriteAccess);
-        dataFile = makeData(dataSize, initBuf, initOff, initLen);
+        capsFile = makeCaps(initSize, initReadAccess, initWriteAccess);
+        dataFile = makeData(initSize, initBuf, initOff, initLen);
     }
 
     /**
