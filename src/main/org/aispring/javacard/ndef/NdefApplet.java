@@ -101,6 +101,16 @@ public final class NdefApplet extends Applet {
     static final boolean FEATURE_INSTALL_PARAMETERS = true;
 
     /**
+     * Configuration: support advanced access restrictions
+     *
+     * If enabled the applet will support the special
+     * access modes "contact only" as well as "write once".
+     *
+     * Disabling this saves about 170 bytes.
+     */
+    static final boolean FEATURE_ADVANCED_ACCESS_CONTROL = false;
+
+    /**
      * Configuration: maximum read block size
      */
     static final short NDEF_MAX_READ = 128;
@@ -339,11 +349,13 @@ public final class NdefApplet extends Applet {
      * @param len of CC in buffer
      */
     private final void fixCaps(byte[] caps, short off, short len) {
-        short offNFC = (short)(off + CC_OFF_NDEF_FILE_CONTROL + 2);
-        short offR = (short)(offNFC + FC_OFF_READ_ACCESS);
-        short offW = (short)(offNFC + FC_OFF_WRITE_ACCESS);
-        caps[offR] = fixAccess(dataFile, dataReadAccess);
-        caps[offW] = fixAccess(dataFile, dataWriteAccess);
+        if(FEATURE_ADVANCED_ACCESS_CONTROL) {
+            short offNFC = (short) (off + CC_OFF_NDEF_FILE_CONTROL + 2);
+            short offR = (short) (offNFC + FC_OFF_READ_ACCESS);
+            short offW = (short) (offNFC + FC_OFF_WRITE_ACCESS);
+            caps[offR] = fixAccess(dataFile, dataReadAccess);
+            caps[offW] = fixAccess(dataFile, dataWriteAccess);
+        }
     }
 
     /**
@@ -548,20 +560,25 @@ public final class NdefApplet extends Applet {
      * @return true if access granted, false otherwise
      */
     private final boolean checkAccess(byte[] data, byte access) {
-        // get protocol and media information
-        byte protocol = APDU.getProtocol();
-        byte media = (byte)(protocol & APDU.PROTOCOL_MEDIA_MASK);
-        // make the decision
-        switch(access) {
-            case FILE_ACCESS_OPEN:
-                return true;
-            case FILE_ACCESS_PROP_CONTACT_ONLY:
-                return media == APDU.PROTOCOL_MEDIA_DEFAULT;
-            case FILE_ACCESS_PROP_WRITE_ONCE:
-                return data[0] == 0 && data[1] == 0;
-            default:
-            case FILE_ACCESS_NONE:
-                return false;
+        if(!FEATURE_ADVANCED_ACCESS_CONTROL) {
+            // simple access control
+            return access == FILE_ACCESS_OPEN;
+        } else {
+            // get protocol and media information
+            byte protocol = APDU.getProtocol();
+            byte media = (byte) (protocol & APDU.PROTOCOL_MEDIA_MASK);
+            // make the decision
+            switch (access) {
+                case FILE_ACCESS_OPEN:
+                    return true;
+                case FILE_ACCESS_PROP_CONTACT_ONLY:
+                    return media == APDU.PROTOCOL_MEDIA_DEFAULT;
+                case FILE_ACCESS_PROP_WRITE_ONCE:
+                    return data[0] == 0 && data[1] == 0;
+                default:
+                case FILE_ACCESS_NONE:
+                    return false;
+            }
         }
     }
 
