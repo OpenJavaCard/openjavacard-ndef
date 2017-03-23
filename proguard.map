@@ -1,0 +1,16 @@
+org.aispring.javacard.ndef.NdefApplet -> org.aispring.javacard.ndef.NdefApplet:
+    short selectedFile -> a
+    byte[] capsFile -> b
+    byte[] dataFile -> c
+    byte dataReadAccess -> d
+    byte dataWriteAccess -> e
+    void install(byte[],short,byte) -> install
+    void <init>(byte[],short,byte) -> <init>
+    void process(javacard.framework.APDU) -> process
+    boolean checkAccess(byte[],byte) -> A
+    byte fixAccess(byte[],byte) -> B
+org.aispring.javacard.ndef.UtilTLV -> org.aispring.javacard.ndef.A:
+    short findTag(byte[],short,short,byte) -> A
+    boolean isTLVconsistent(byte[],short,short) -> B
+    short decodeLengthField(byte[],short) -> C
+    short getLengthFieldLength(short) -> D
