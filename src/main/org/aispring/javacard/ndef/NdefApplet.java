@@ -96,7 +96,7 @@ public final class NdefApplet extends Applet {
      * If enabled this will allow customization of the applet
      * during installation by using application parameters.
      *
-     * Disabling this saves about 200 bytes.
+     * Disabling this saves up to 600 bytes.
      */
     static final boolean FEATURE_INSTALL_PARAMETERS = true;
 
