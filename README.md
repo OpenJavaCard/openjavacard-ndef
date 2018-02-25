@@ -18,6 +18,7 @@ provisioning by the user or during card personalization.
 
  * Works well with some Android apps on a few cards of mine
  * Feature-complete as far as the standard goes
+ * Only T=1 is supported, high-quality patches welcome
  * No systematic testing has been done
  * No systematic review has taken place
  * No unit tests have been implemented
