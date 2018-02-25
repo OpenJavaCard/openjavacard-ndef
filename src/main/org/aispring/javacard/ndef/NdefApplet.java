@@ -397,10 +397,9 @@ public final class NdefApplet extends Applet {
                 case INS_UPDATE_BINARY:
                     if(FEATURE_WRITING) {
                         processUpdateBinary(apdu);
-                    } else {
-                        ISOException.throwIt(ISO7816.SW_INS_NOT_SUPPORTED);
+                        break;
                     }
-                    break;
+                    // FALL THROUGH
                 default:
                     ISOException.throwIt(ISO7816.SW_INS_NOT_SUPPORTED);
             }
