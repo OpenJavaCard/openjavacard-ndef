@@ -427,10 +427,7 @@ public final class NdefApplet extends Applet {
         byte lc = buffer[ISO7816.OFFSET_LC];
 
         // we only support what the NDEF spec prescribes
-        if(p1 != SELECT_P1_BY_FILEID) {
-            ISOException.throwIt(ISO7816.SW_FUNC_NOT_SUPPORTED);
-        }
-        if(p2 != SELECT_P2_FIRST_OR_ONLY) {
+        if(p1 != SELECT_P1_BY_FILEID || p2 != SELECT_P2_FIRST_OR_ONLY) {
             ISOException.throwIt(ISO7816.SW_FUNC_NOT_SUPPORTED);
         }
 
