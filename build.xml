@@ -5,11 +5,13 @@
 
     <description>JavaCard implementation of an NDEF Type 4 tag</description>
 
+    <!-- Cleanup target -->
     <target name="clean"
             description="clean up">
         <delete dir="build"/>
     </target>
 
+    <!-- Build-all target -->
     <target name="build"
             description="build everything"
             depends="build-full-proguard,build-tiny-proguard">
