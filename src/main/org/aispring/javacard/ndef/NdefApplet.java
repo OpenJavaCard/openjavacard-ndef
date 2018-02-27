@@ -64,10 +64,10 @@ public final class NdefApplet extends Applet {
     /* NDEF mapping version (specification 2.0) */
     static final byte NDEF_MAPPING_VERSION = (byte)0x20;
 
-    /* Application data tags */
-    static final byte AD_TAG_NDEF_DATA_INITIAL = (byte)0x10;
-    static final byte AD_TAG_NDEF_DATA_ACCESS  = (byte)0x11;
-    static final byte AD_TAG_NDEF_DATA_SIZE    = (byte)0x12;
+    /* Applet data tags (initialization data) */
+    static final byte AD_TAG_NDEF_DATA_INITIAL = (byte)0x80;
+    static final byte AD_TAG_NDEF_DATA_ACCESS  = (byte)0x81;
+    static final byte AD_TAG_NDEF_DATA_SIZE    = (byte)0x82;
 
     /* Constants related to capability container */
     static final byte CC_LEN_HEADER = 7;
