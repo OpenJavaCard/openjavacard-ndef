@@ -55,7 +55,7 @@
                  classes="build/classes/full-plain"
                  version="1.0">
                 <applet aid="D2760000850101"
-                        class="org.aispring.javacard.ndef.NdefApplet"/>
+                        class="org.aispring.javacard.ndef.full.NdefApplet"/>
             </cap>
         </javacard>
     </target>
@@ -88,7 +88,7 @@
                  classes="build/classes/full-proguard"
                  version="1.0">
                 <applet aid="D2760000850101"
-                        class="org.aispring.javacard.ndef.NdefApplet"/>
+                        class="org.aispring.javacard.ndef.full.NdefApplet"/>
             </cap>
         </javacard>
     </target>

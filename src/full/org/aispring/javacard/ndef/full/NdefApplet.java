@@ -17,7 +17,7 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-package org.aispring.javacard.ndef;
+package org.aispring.javacard.ndef.full;
 
 import javacard.framework.*;
 
