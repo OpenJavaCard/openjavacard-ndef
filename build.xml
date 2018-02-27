@@ -12,7 +12,7 @@
 
     <target name="build"
             description="build everything"
-            depends="build-full-proguard">
+            depends="build-full-proguard,build-tiny-proguard">
     </target>
 
     <!-- Ant extension for JavaCard -->
@@ -89,6 +89,68 @@
                  version="1.0">
                 <applet aid="D2760000850101"
                         class="org.aispring.javacard.ndef.NdefApplet"/>
+            </cap>
+        </javacard>
+    </target>
+
+    <target name="build-tiny-plain"
+            depends="ext-javacard">
+        <tstamp/>
+        <!-- Directory for class files -->
+        <mkdir dir="build/classes/tiny-plain"/>
+        <!-- Compile code -->
+        <javac srcdir="src/tiny"
+               destdir="build/classes/tiny-plain"
+               classpath="/opt/javacard-2.2.2/lib/api.jar"
+               includeantruntime="false"
+               source="1.5"
+               target="1.5">
+            <compilerarg value="-Xlint"/>
+            <compilerarg value="-Xlint:-options"/>
+            <compilerarg value="-Xlint:-serial"/>
+        </javac>
+        <!-- Directory for CAP files -->
+        <mkdir dir="build/javacard"/>
+        <!-- Plain CAP file -->
+        <javacard>
+            <cap output="build/javacard/javacard-ndef-tiny-plain.cap"
+                 classes="build/classes/tiny-plain"
+                 version="1.0">
+                <applet aid="D2760000850101"
+                        class="org.aispring.javacard.ndef.tiny.NdefApplet"/>
+            </cap>
+        </javacard>
+    </target>
+
+    <target name="build-tiny-proguard"
+            depends="ext-javacard,ext-proguard,build-tiny-plain">
+        <!-- Directory for class files -->
+        <mkdir dir="build/classes/tiny-proguard"/>
+        <!-- Run the class files through proguard -->
+        <proguard>
+            -verbose
+            -printseeds
+            -printusage
+            -printmapping
+            -applymapping proguard.map
+            -injars build/classes/tiny-plain
+            -outjars build/classes/tiny-proguard
+            -libraryjars /opt/javacard-2.2.2/lib/api.jar
+            -dontwarn java.lang.Class
+            -allowaccessmodification
+            -keep public class * implements javacard.framework.Applet {
+            public static void install(byte[], short, byte);
+            }
+        </proguard>
+        <!-- Directory for CAP files -->
+        <mkdir dir="build/javacard"/>
+        <!-- Obfuscated CAP file -->
+        <javacard>
+            <cap output="build/javacard/javacard-ndef-tiny-proguard.cap"
+                 classes="build/classes/tiny-proguard"
+                 version="1.0">
+                <applet aid="D2760000850101"
+                        class="org.aispring.javacard.ndef.tiny.NdefApplet"/>
             </cap>
         </javacard>
     </target>
