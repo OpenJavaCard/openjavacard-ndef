@@ -1,35 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="javacard-ndef"
-         default="compile"
+         default="build"
          basedir=".">
 
     <description>JavaCard implementation of an NDEF Type 4 tag</description>
 
-    <!-- Use proguard -->
-    <taskdef classpath="/opt/proguard/lib/proguard.jar"
-             resource="proguard/ant/task.properties"/>
+    <target name="clean"
+            description="clean up">
+        <delete dir="build"/>
+    </target>
 
-    <!-- Main target -->
-    <target name="compile"
-            description="compile everything">
+    <target name="build"
+            description="build everything"
+            depends="build-full-proguard">
+    </target>
 
-        <tstamp/>
-
+    <!-- Ant extension for JavaCard -->
+    <target name="ext-javacard">
         <!-- Build ant-javacard -->
         <ant dir="ext/ant"/>
-
         <!-- Use ant-javacard -->
         <taskdef name="javacard"
                  classpath="ext/ant/ant-javacard.jar"
                  classname="pro.javacard.ant.JavaCard"/>
+    </target>
 
-        <!-- Directories for class files -->
-        <mkdir dir="build/classes/original"/>
-        <mkdir dir="build/classes/proguard"/>
+    <!-- Ant extensions for Proguard -->
+    <target name="ext-proguard">
+        <taskdef classpath="/opt/proguard/lib/proguard.jar"
+                 resource="proguard/ant/task.properties"/>
+    </target>
 
-        <!-- Compile java code -->
-        <javac srcdir="src/main"
-               destdir="build/classes/original"
+    <target name="build-full-plain"
+            depends="ext-javacard">
+        <tstamp/>
+        <!-- Directory for class files -->
+        <mkdir dir="build/classes/full-plain"/>
+        <!-- Compile code -->
+        <javac srcdir="src/full"
+               destdir="build/classes/full-plain"
                classpath="/opt/javacard-2.2.2/lib/api.jar"
                includeantruntime="false"
                source="1.5"
@@ -38,7 +47,23 @@
             <compilerarg value="-Xlint:-options"/>
             <compilerarg value="-Xlint:-serial"/>
         </javac>
+        <!-- Directory for CAP files -->
+        <mkdir dir="build/javacard"/>
+        <!-- Plain CAP file -->
+        <javacard>
+            <cap output="build/javacard/javacard-ndef-full-plain.cap"
+                 classes="build/classes/full-plain"
+                 version="1.0">
+                <applet aid="D2760000850101"
+                        class="org.aispring.javacard.ndef.NdefApplet"/>
+            </cap>
+        </javacard>
+    </target>
 
+    <target name="build-full-proguard"
+            depends="ext-javacard,ext-proguard,build-full-plain">
+        <!-- Directory for class files -->
+        <mkdir dir="build/classes/full-proguard"/>
         <!-- Run the class files through proguard -->
         <proguard>
             -verbose
@@ -46,8 +71,8 @@
             -printusage
             -printmapping
             -applymapping proguard.map
-            -injars build/classes/original
-            -outjars build/classes/proguard
+            -injars build/classes/full-plain
+            -outjars build/classes/full-proguard
             -libraryjars /opt/javacard-2.2.2/lib/api.jar
             -dontwarn java.lang.Class
             -allowaccessmodification
@@ -55,35 +80,17 @@
                 public static void install(byte[], short, byte);
             }
         </proguard>
-
         <!-- Directory for CAP files -->
         <mkdir dir="build/javacard"/>
-
-        <!-- Unobfuscated CAP file -->
-        <javacard>
-            <cap output="build/javacard/javacard-ndef-original.cap"
-                 classes="build/classes/original"
-                 version="1.0">
-                <applet aid="D2760000850101"
-                        class="org.aispring.javacard.ndef.NdefApplet"/>
-            </cap>
-        </javacard>
-
         <!-- Obfuscated CAP file -->
         <javacard>
-            <cap output="build/javacard/javacard-ndef-proguard.cap"
-                 classes="build/classes/proguard"
+            <cap output="build/javacard/javacard-ndef-full-proguard.cap"
+                 classes="build/classes/full-proguard"
                  version="1.0">
                 <applet aid="D2760000850101"
                         class="org.aispring.javacard.ndef.NdefApplet"/>
             </cap>
         </javacard>
-
-    </target>
-
-    <target name="clean"
-            description="clean up">
-        <delete dir="build"/>
     </target>
 
 </project>
