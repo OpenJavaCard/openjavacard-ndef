@@ -220,7 +220,7 @@ public final class NdefApplet extends Applet {
                 initBuf = buf;
                 initLen = UtilTLV.decodeLengthField(buf, (short) (initTag + 1));
                 initOff = (short) (initTag + 1 + UtilTLV.getLengthFieldLength(initLen));
-                // restrict writing, can be overridden
+                // restrict writing, can be overridden using DATA ACCESS
                 initWriteAccess = FILE_ACCESS_NONE;
                 // adjust size, can be overridden
                 initSize = (short) (2 + initLen);
