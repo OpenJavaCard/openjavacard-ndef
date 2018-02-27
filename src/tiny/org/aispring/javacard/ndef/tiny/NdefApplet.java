@@ -22,7 +22,12 @@ package org.aispring.javacard.ndef.tiny;
 import javacard.framework.*;
 
 /**
- * \brief Applet implementing an NDEF type 4 tag
+ * \brief Applet implementing an NDEF type 4 read-only tag
+ *
+ * This is the TINY variant of the applet.
+ *
+ * No writing is supported. Data must be initialized by providing
+ * an NDEF record directly in the applet initialization data.
  *
  * Implemented to comply with:
  *   NFC Forum
@@ -30,13 +35,11 @@ import javacard.framework.*;
  *   Version 2.0
  *
  * Conformity remarks:
- *   1. The NDEF data file can be up to 32767 bytes in size,
- *      corresponding to the specification maximum.
+ *   1. The NDEF data file is restricted in size to the maximum
+ *      size of initialization data on the specific platform.
  *   2. No file control information (FCI) is returned in SELECT responses
  *      as allowed by specification requirement RQ_T4T_NDA_034.
- *   3. Proprietary access modes are being used for custom features,
- *      however they are not exposed in the capability descriptor.
- *   4. Proprietary files are not being used.
+ *   3. Proprietary files are not being used.
  *
  */
 public final class NdefApplet extends Applet {
