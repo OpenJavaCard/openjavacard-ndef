@@ -71,8 +71,8 @@
             -verbose
             -printseeds
             -printusage
-            -printmapping
-            -applymapping proguard.map
+            -ignorewarnings
+            -applymapping proguard-full.map
             -injars build/classes/full-plain
             -outjars build/classes/full-proguard
             -libraryjars /opt/javacard-2.2.2/lib/api.jar
@@ -90,7 +90,7 @@
                  classes="build/classes/full-proguard"
                  version="1.0">
                 <applet aid="D2760000850101"
-                        class="org.aispring.javacard.ndef.full.NdefApplet"/>
+                        class="a.A"/>
             </cap>
         </javacard>
     </target>
@@ -133,15 +133,15 @@
             -verbose
             -printseeds
             -printusage
-            -printmapping
-            -applymapping proguard.map
+            -ignorewarnings
+            -applymapping proguard-tiny.map
             -injars build/classes/tiny-plain
             -outjars build/classes/tiny-proguard
             -libraryjars /opt/javacard-2.2.2/lib/api.jar
             -dontwarn java.lang.Class
             -allowaccessmodification
             -keep public class * implements javacard.framework.Applet {
-            public static void install(byte[], short, byte);
+                public static void install(byte[], short, byte);
             }
         </proguard>
         <!-- Directory for CAP files -->
@@ -152,7 +152,7 @@
                  classes="build/classes/tiny-proguard"
                  version="1.0">
                 <applet aid="D2760000850101"
-                        class="org.aispring.javacard.ndef.tiny.NdefApplet"/>
+                        class="a.A"/>
             </cap>
         </javacard>
     </target>
