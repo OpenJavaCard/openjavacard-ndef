@@ -232,15 +232,12 @@ public final class NdefApplet extends Applet {
 
         // process commands to the applet
         if(apdu.isISOInterindustryCLA()) {
-            switch (ins) {
-                case INS_SELECT:
-                    processSelect(apdu);
-                    break;
-                case INS_READ_BINARY:
-                    processReadBinary(apdu);
-                    break;
-                default:
-                    ISOException.throwIt(ISO7816.SW_INS_NOT_SUPPORTED);
+            if(ins == INS_SELECT) {
+                processSelect(apdu);
+            } else if(ins == INS_READ_BINARY) {
+                processReadBinary(apdu);
+            } else {
+                ISOException.throwIt(ISO7816.SW_INS_NOT_SUPPORTED);
             }
         } else {
             ISOException.throwIt(ISO7816.SW_CLA_NOT_SUPPORTED);
