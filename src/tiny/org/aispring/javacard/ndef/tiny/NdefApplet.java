@@ -239,8 +239,6 @@ public final class NdefApplet extends Applet {
                 case INS_READ_BINARY:
                     processReadBinary(apdu);
                     break;
-                case INS_UPDATE_BINARY:
-                    ISOException.throwIt(ISO7816.SW_COMMAND_NOT_ALLOWED);
                 default:
                     ISOException.throwIt(ISO7816.SW_INS_NOT_SUPPORTED);
             }
