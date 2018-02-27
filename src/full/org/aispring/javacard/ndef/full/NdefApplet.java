@@ -440,13 +440,10 @@ public final class NdefApplet extends Applet {
         short fileId = Util.getShort(buffer, ISO7816.OFFSET_CDATA);
 
         // perform selection if the ID is valid
-        switch(fileId) {
-            case FILEID_NDEF_CAPABILITIES:
-            case FILEID_NDEF_DATA:
-                selectedFile = fileId;
-                break;
-            default:
-                ISOException.throwIt(ISO7816.SW_FILE_NOT_FOUND);
+        if(fileId == FILEID_NDEF_CAPABILITIES || fileId == FILEID_NDEF_DATA) {
+            selectedFile = fileId;
+        } else {
+            ISOException.throwIt(ISO7816.SW_FILE_NOT_FOUND);
         }
     }
 
