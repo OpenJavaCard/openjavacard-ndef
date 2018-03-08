@@ -45,50 +45,50 @@ import javacard.framework.*;
 public final class NdefApplet extends Applet {
 
     /* Instructions */
-    static final byte INS_SELECT        = ISO7816.INS_SELECT;
-    static final byte INS_READ_BINARY   = (byte)0xB0;
-    static final byte INS_UPDATE_BINARY = (byte)0xD6;
+    private static final byte INS_SELECT        = ISO7816.INS_SELECT;
+    private static final byte INS_READ_BINARY   = (byte)0xB0;
+    private static final byte INS_UPDATE_BINARY = (byte)0xD6;
 
     /* File IDs */
-    static final short FILEID_NONE              = (short)0x0000;
-    static final short FILEID_NDEF_CAPABILITIES = (short)0xE103;
-    static final short FILEID_NDEF_DATA         = (short)0xE104;
+    private static final short FILEID_NONE              = (short)0x0000;
+    private static final short FILEID_NDEF_CAPABILITIES = (short)0xE103;
+    private static final short FILEID_NDEF_DATA         = (short)0xE104;
 
     /* File access specifications */
-    static final byte FILE_ACCESS_OPEN = (byte)0x00;
-    static final byte FILE_ACCESS_NONE = (byte)0xFF;
+    private static final byte FILE_ACCESS_OPEN = (byte)0x00;
+    private static final byte FILE_ACCESS_NONE = (byte)0xFF;
 
     /* Parameters for SELECT */
-    static final byte SELECT_P1_BY_FILEID     = (byte)0x00;
-    static final byte SELECT_P2_FIRST_OR_ONLY = (byte)0x0C;
+    private static final byte SELECT_P1_BY_FILEID     = (byte)0x00;
+    private static final byte SELECT_P2_FIRST_OR_ONLY = (byte)0x0C;
 
     /* NDEF mapping version (specification 2.0) */
-    static final byte NDEF_MAPPING_VERSION = (byte)0x20;
+    private static final byte NDEF_MAPPING_VERSION = (byte)0x20;
 
     /* Constants related to capability container */
-    static final byte CC_LEN_HEADER = 7;
-    static final byte CC_TAG_NDEF_FILE_CONTROL = 0x04;
-    static final byte CC_LEN_NDEF_FILE_CONTROL = 6;
+    private static final byte CC_LEN_HEADER = 7;
+    private static final byte CC_TAG_NDEF_FILE_CONTROL = 0x04;
+    private static final byte CC_LEN_NDEF_FILE_CONTROL = 6;
 
     /**
      * Configuration: maximum read block size
      */
-    static final short NDEF_MAX_READ = 128;
+    private static final short NDEF_MAX_READ = 128;
 
     /**
      * Configuration: maximum write block size
      */
-    static final short NDEF_MAX_WRITE = 128;
+    private static final short NDEF_MAX_WRITE = 128;
 
     /**
      * Configuration: read access
      */
-    static final byte NDEF_READ_ACCESS = FILE_ACCESS_OPEN;
+    private static final byte NDEF_READ_ACCESS = FILE_ACCESS_OPEN;
 
     /**
      * Configuration: write access
      */
-    static final byte NDEF_WRITE_ACCESS = FILE_ACCESS_NONE;
+    private static final byte NDEF_WRITE_ACCESS = FILE_ACCESS_NONE;
 
     /** ID of currently selected file */
     private static short selectedFile;
