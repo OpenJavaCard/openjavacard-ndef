@@ -7,7 +7,7 @@ org.aispring.javacard.ndef.full.NdefApplet -> a.A:
     void install(byte[],short,byte) -> install
     void <init>(byte[],short,byte) -> <init>
     void process(javacard.framework.APDU) -> process
-    boolean checkAccess$49633144(byte) -> a
+    boolean checkAccess(byte) -> a
 org.aispring.javacard.ndef.full.UtilTLV -> a.B:
     short findTag(byte[],short,short,byte) -> a
     boolean isTLVconsistent(byte[],short,short) -> a
