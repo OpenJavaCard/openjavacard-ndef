@@ -94,9 +94,9 @@ public final class NdefApplet extends Applet {
     private static short selectedFile;
 
     /** NDEF capability file contents */
-    private static byte[] capsFile;
+    private final byte[] capsFile;
     /** NDEF data file contents */
-    private static byte[] dataFile;
+    private final byte[] dataFile;
 
     /**
      * Installs an NDEF applet
