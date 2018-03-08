@@ -108,7 +108,7 @@ public final class NdefApplet extends Applet {
      *
      * Disabling this saves about 170 bytes.
      */
-    static final boolean FEATURE_ADVANCED_ACCESS_CONTROL = false;
+    static final boolean FEATURE_ADVANCED_ACCESS_CONTROL = true;
 
     /**
      * Configuration: maximum read block size
