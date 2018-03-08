@@ -112,7 +112,7 @@ public final class NdefApplet extends Applet {
      * @param off offset of install data in buf
      * @param len length of install data in buf
      */
-    public static final void install(byte[] buf, short off, byte len) {
+    public static void install(byte[] buf, short off, byte len) {
         short pos = off;
         // find AID
         byte  lenAID = buf[pos++];
@@ -167,7 +167,7 @@ public final class NdefApplet extends Applet {
      * @param dataSize to be allocated
      * @return an array for use as the CC file
      */
-    private final byte[] makeCaps(short dataSize) {
+    private byte[] makeCaps(short dataSize) {
         short capsLen = (short)(CC_LEN_HEADER + 2 + CC_LEN_NDEF_FILE_CONTROL);
         byte[] caps = new byte[capsLen];
 
@@ -258,7 +258,7 @@ public final class NdefApplet extends Applet {
      * @param apdu to process
      * @throws ISOException on error
      */
-    private final void processSelect(APDU apdu) throws ISOException {
+    private void processSelect(APDU apdu) throws ISOException {
         byte[] buffer = apdu.getBuffer();
         byte p1 = buffer[ISO7816.OFFSET_P1];
         byte p2 = buffer[ISO7816.OFFSET_P2];
@@ -297,7 +297,7 @@ public final class NdefApplet extends Applet {
      * @param apdu to process
      * @throws ISOException on error
      */
-    private final void processReadBinary(APDU apdu) throws ISOException {
+    private void processReadBinary(APDU apdu) throws ISOException {
         byte[] buffer = apdu.getBuffer();
 
         // access the file
@@ -343,7 +343,7 @@ public final class NdefApplet extends Applet {
      * @return data array of the file
      * @throws ISOException on error
      */
-    private final byte[] accessFileForRead(short fileId) throws ISOException {
+    private byte[] accessFileForRead(short fileId) throws ISOException {
         byte[] file = null;
         // select relevant data
         if(fileId == FILEID_NDEF_CAPABILITIES) {
