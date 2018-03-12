@@ -92,7 +92,9 @@ public final class NdefApplet extends Applet {
 
     /** Transient variables */
     private static short[] vars;
+    /** Index for currently selected file */
     private static final byte VAR_SELECTED_FILE = (byte)0;
+    /** Number of transient variables */
     private static final short NUM_VARS = (short)1;
 
     /** NDEF capability file contents */
