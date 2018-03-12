@@ -281,7 +281,7 @@ public final class NdefApplet extends Applet {
         short pos = 0;
 
         // CC length
-        pos = Util.setShort(caps, pos,  capsLen);
+        pos = Util.setShort(caps, pos, capsLen);
         // mapping version
         caps[pos++] = NDEF_MAPPING_VERSION;
         // maximum read size
