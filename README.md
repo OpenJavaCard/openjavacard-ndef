@@ -43,26 +43,108 @@ provisioning by the user or during card personalization.
   * Default size is 256 bytes to save card memory
   * Preloading data automatically sets storage size
 
-### Install-time configuration
+### Variants
 
-It is possible to configure the applet at install time. To do
-so you will have to find out how to provide custom application
-data to your GlobalPlatform frontend. For common opensource
-tools such as "gp.jar" and "gpj.jar" you can do it like this:
+The TINY variant is a minimal read-only NDEF tag that can be initialized
+by providing NDEF data as install data during installation. This version
+of the applet has a load file size less than 1024 bytes and is recommended
+for serving static content. A good example would be pointing the user to
+a lost-item return service. Please be mindful of the fact that a static
+tag allows for easy identification, creating privacy concerns.
+
+The STUB variant is an applet that uses a service to generate its contents.
+This can be used for creating dynamic NDEF tags. Possible applications are
+found in areas like unidirectional authentication and identification - such
+as pseudonymous lost-item return services, proof-of-presence and other types
+of token generation. This variant must be provisioned with a service ID and
+AID at install time unless it is configured at build time. Writing is not
+supported.
+
+The FULL variant is a writable and configurable NDEF tag with advanced
+features such as media-dependent access control and write-once support.
+It can be configured during installation and at build time to include
+various features. By default this will be a writable NDEF tag with 256
+bytes of memory. Its load file size ranges from about 1k to 2k bytes
+depending on selected features.
+
+### APDU Protocol
+
+This applet implements only the exact minimum of APDU commands
+that the NDEF specification prescribes. All variants implement
+the same subset, being limited only in implemented features.
+
+**SELECT (CLA=00 INS=A4 P1=00 P2=0C CDATA=fid)**
+
+   Select a file in the applet.
+
+   P1=00 means "SELECT BY FILEID"
+   P2=0C means "SELECT FIRST OR ONLY"
+   Other selection modes are not supported.
+
+   There are two files on the card:
+     * 0xE103 - NDEF capabilities
+     * 0xE104 - NDEF data
+
+   In exception to ISO7816 no FCI (file control information) will
+   be returned, as permitted by NDEF specification requirement
+   RQ_T4T_NDA_034.
+
+   Returns SW=9000 when successful.
+
+**READ BINARY (CLA=00 INS=B0 P12=offset RDATA=output)**
+
+   Read data from the selected file.
+
+   P12 specified the offset into the file and must be valid.
+
+   Length of RDATA is variable and depends on available
+   resources, the protocol in use as well as the file size.
+   As much data as possible will be returned.
+
+   Returns SW=9000 when successful.
+
+**UPDATE BINARY (CLA=00 INS=D6)**
+
+   Update data in the selected file.
+
+### Installation protocol
+
+#### Common information
+
+It is possible to configure the various variants of the applet
+at install time. To do so you will have to find out how to provide
+custom application data to your GlobalPlatform frontend. For common
+opensource tools such as "gp.jar" and "gpj.jar" you can do it like this:
 
 ```
  user@host:~$ java -jar gp.jar \
         -params 100BD101075402656E54657374 \
-        -install javacard-ndef.cap
- (This example will preload the tag with the text "Test")
+        -install build/javacard/javacard-ndef-tiny.cap
+ (Install tiny variant with static text "Test")
 ```
 
 ```
  user@host:~$ java -jar gp.jar \
         -params 110200F112020800 \
-        -install javacard-ndef.cap
- (This will make the tag write-once with 2048 bytes of memory)
+        -install build/javacard&javacard-ndef-full.cap
+ (Install full variant as a write-once tag with 2048 bytes of memory)
 ```
+
+#### Tiny variant
+
+The tiny variant requires an NDEF tag dataset as its install data.
+
+The provided data will be used as the static data file of the tag.
+
+No verification is performed on the data - it must be valid.
+
+A length prefix should NOT be included.
+
+#### Stub variant
+
+This variant requires a backend service in another applet.
+
+#### Full variant
 
 The following TLV records are supported:
 
@@ -110,22 +192,23 @@ This project contains some code from the excellent [IsoApplet](https://github.co
 [Philip Wendland](https://github.com/philipWendland). If you are looking for
 a modern PKCS#11 applet that works well with OpenSC then this should be your choice.
 
-### Recommended Android Apps
-
-I can recommend [NFC TagInfo](https://play.google.com/store/apps/details?id=com.nxp.taginfolite)
-and [NFC TagWriter](https://play.google.com/store/apps/details?id=com.nxp.nfc.tagwriter) by NXP
-for interacting with this applet, even though they are proprietary. Both apps are quite
-professional and work well. TagInfo is great for debugging because it shows a lot of detail.
-
 ### Legal
 
-Copyright 2015-2017 Ingo Albrecht
+Copyright 2015-2018 Ingo Albrecht
 
 This software is licensed under the GNU GPL Version 3.
 See the file LICENSE in the source tree for further information.
 
 This software contains TLV parsing functions developed
-and published by Philip Wendland as part of IsoApplet.
+and published by Philip Wendland as part of IsoApplet, which
+are also licensed under the GNU GPL Version 3.
+
+Note that the GPL requires that you make the source code to
+your applet available to all your customers and that you
+inform your customers about this option by means of an
+explicit written offer. It is recommended to publish your
+modifications as open source software, just as this project
+is.
 
 ### Standards
 
