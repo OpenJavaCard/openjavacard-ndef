@@ -131,7 +131,7 @@ public final class NdefApplet extends Applet {
         NdefApplet applet = new NdefApplet(buf, offAD, lenAD);
 
         // register the applet
-        applet.register(buf, offAID, lenAID);
+        applet.register();
     }
 
     /**
