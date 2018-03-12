@@ -262,12 +262,14 @@ public final class NdefApplet extends Applet {
         byte[] buffer = apdu.getBuffer();
         byte p1 = buffer[ISO7816.OFFSET_P1];
         byte p2 = buffer[ISO7816.OFFSET_P2];
-        byte lc = buffer[ISO7816.OFFSET_LC];
 
         // we only support what the NDEF spec prescribes
         if(p1 != SELECT_P1_BY_FILEID || p2 != SELECT_P2_FIRST_OR_ONLY) {
             ISOException.throwIt(ISO7816.SW_FUNC_NOT_SUPPORTED);
         }
+
+        // receive data
+        short lc = apdu.setIncomingAndReceive();
 
         // check length, must be for a file ID
         if(lc != 2) {
