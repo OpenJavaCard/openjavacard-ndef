@@ -125,7 +125,7 @@
                  classes="build/classes/full-proguard"
                  version="1.0">
                 <applet aid="D2760000850101"
-                        class="a.A"/>
+                        class="full.A"/>
             </cap>
         </javacard>
     </target>
@@ -255,7 +255,7 @@
                  classes="build/classes/tiny-proguard"
                  version="1.0">
                 <applet aid="D2760000850101"
-                        class="a.A"/>
+                        class="tiny.A"/>
             </cap>
         </javacard>
     </target>
