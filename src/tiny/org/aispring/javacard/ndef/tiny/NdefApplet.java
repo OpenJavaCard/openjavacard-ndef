@@ -90,8 +90,10 @@ public final class NdefApplet extends Applet {
      */
     private static final byte NDEF_WRITE_ACCESS = FILE_ACCESS_NONE;
 
-    /** ID of currently selected file */
-    private static short selectedFile;
+    /** Transient variables */
+    private static short[] vars;
+    private static final byte VAR_SELECTED_FILE = (byte)0;
+    private static final short NUM_VARS = (short)1;
 
     /** NDEF capability file contents */
     private static byte[] capsFile;
@@ -145,6 +147,8 @@ public final class NdefApplet extends Applet {
      * @param len length of app data in buf
      */
     protected NdefApplet(byte[] buf, short off, byte len) {
+        // create transient variables
+        vars = JCSystem.makeTransientShortArray(NUM_VARS, JCSystem.CLEAR_ON_DESELECT);
         // create capabilities files
         capsFile = makeCaps(len);
         // create data file
@@ -221,7 +225,7 @@ public final class NdefApplet extends Applet {
 
         // handle selection of the applet
         if(selectingApplet()) {
-            selectedFile = FILEID_NONE;
+            vars[VAR_SELECTED_FILE] = FILEID_NONE;
             return;
         }
 
@@ -281,7 +285,7 @@ public final class NdefApplet extends Applet {
 
         // perform selection if the ID is valid
         if(fileId == FILEID_NDEF_CAPABILITIES || fileId == FILEID_NDEF_DATA) {
-            selectedFile = fileId;
+            vars[VAR_SELECTED_FILE] = fileId;
         } else {
             ISOException.throwIt(ISO7816.SW_FILE_NOT_FOUND);
         }
@@ -303,7 +307,7 @@ public final class NdefApplet extends Applet {
         byte[] buffer = apdu.getBuffer();
 
         // access the file
-        byte[] file = accessFileForRead(selectedFile);
+        byte[] file = accessFileForRead(vars[VAR_SELECTED_FILE]);
 
         // get and check the read offset
         short offset = Util.getShort(buffer, ISO7816.OFFSET_P1);
