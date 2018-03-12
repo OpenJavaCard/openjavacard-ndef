@@ -5,6 +5,9 @@
 
     <description>JavaCard implementation of an NDEF Type 4 tag</description>
 
+    <property name="jckit" value="/opt/javacard-2.2.2"/>
+    <property name="proguard" value="/opt/proguard"/>
+
     <!-- Cleanup target -->
     <target name="clean"
             description="clean up">
@@ -36,7 +39,7 @@
 
     <!-- Ant extensions for Proguard -->
     <target name="ext-proguard">
-        <taskdef classpath="/opt/proguard/lib/proguard.jar"
+        <taskdef classpath="${proguard}/lib/proguard.jar"
                  resource="proguard/ant/task.properties"/>
     </target>
 
@@ -68,9 +71,8 @@
                includeantruntime="false"
                debug="true"
                source="1.8" target="1.8">
-            <classpath path="/opt/javacard-2.2.2/lib/api.jar"/>
+            <classpath path="${jckit}/lib/api.jar"/>
         </javac>
-        <mkdir dir="build/jar"/>
         <jar destfile="build/jar/javacard-ndef-client.jar">
             <fileset dir="build/classes/client"/>
             <manifest>
@@ -85,7 +87,7 @@
         <!-- Compile code -->
         <javac srcdir="src/full"
                destdir="build/classes/full-plain"
-               classpath="/opt/javacard-2.2.2/lib/api.jar"
+               classpath="${jckit}/lib/api.jar"
                includeantruntime="false"
                source="1.5" target="1.5">
             <compilerarg value="-Xlint"/>
@@ -116,7 +118,7 @@
             -injars build/classes/full-plain
             -outjars build/classes/full-proguard
             -printmapping build/javacard/javacard-ndef-full-proguard.map
-            -libraryjars /opt/javacard-2.2.2/lib/api.jar
+            -libraryjars ${jckit}/lib/api.jar
             -dontwarn java.lang.Class
             -allowaccessmodification
             -keep public class * implements javacard.framework.Applet {
@@ -140,7 +142,7 @@
         <!-- Compile code -->
         <javac srcdir="src/stub"
                destdir="build/classes/stub-plain"
-               classpath="/opt/javacard-2.2.2/lib/api.jar"
+               classpath="${jckit}/lib/api.jar"
                includeantruntime="false"
                source="1.5" target="1.5">
             <compilerarg value="-Xlint"/>
@@ -170,7 +172,7 @@
             -injars build/classes/stub-plain
             -outjars build/classes/stub-proguard
             -printmapping build/javacard/javacard-ndef-stub-proguard.map
-            -libraryjars /opt/javacard-2.2.2/lib/api.jar
+            -libraryjars ${jckit}/lib/api.jar
             -dontwarn java.lang.Class
             -allowaccessmodification
             -keep public class * {
@@ -197,7 +199,7 @@
         <!-- Compile code -->
         <javac srcdir="src/tiny"
                destdir="build/classes/tiny-plain"
-               classpath="/opt/javacard-2.2.2/lib/api.jar"
+               classpath="${jckit}/lib/api.jar"
                includeantruntime="false"
                source="1.5" target="1.5">
             <compilerarg value="-Xlint"/>
@@ -228,7 +230,7 @@
             -injars build/classes/tiny-plain
             -outjars build/classes/tiny-proguard
             -printmapping build/javacard/javacard-ndef-tiny-proguard.map
-            -libraryjars /opt/javacard-2.2.2/lib/api.jar
+            -libraryjars ${jckit}/lib/api.jar
             -dontwarn java.lang.Class
             -allowaccessmodification
             -keep public class * implements javacard.framework.Applet {
