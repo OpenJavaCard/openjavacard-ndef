@@ -34,17 +34,17 @@ as well as for dynamic tags.
  * Standard-compliant NDEF reading and writing
  * Does not require object deletion support
  * Configurable at install time
-  * Preloading of NDEF data (up to about 200 bytes)
-  * Configuration of data size
-  * Configuration of access policies
+   * Preloading of NDEF data (up to about 200 bytes)
+   * Configuration of data size
+   * Configuration of access policies
  * Useful access policies
-  * "Contact only" allows limiting writes to contact interface
-  * "Write once" allows writing the data file once for provisioning
-  * Proprietary access policies are hidden from the host,
+   * "Contact only" allows limiting writes to contact interface
+   * "Write once" allows writing the data file once for provisioning
+   * Proprietary access policies are hidden from the host,
     allowing full reader/writer compatibility.
  * Up to 32767 bytes of storage (up to 32765 bytes of NDEF data)
-  * Default size is 256 bytes to save card memory
-  * Preloading data automatically sets storage size
+   * Default size is 256 bytes to save card memory
+   * Preloading data automatically sets storage size
 
 ### Variants
 
@@ -167,6 +167,7 @@ To use it you need to import it as a JavaCard library and implement
 the trivial NdefService interface, serving it as a shareable object.
 
 TODO: Publish an example and some useful applications.
+
 TODO: Document how to configure it. See install example above or source code.
 
 #### Full variant
