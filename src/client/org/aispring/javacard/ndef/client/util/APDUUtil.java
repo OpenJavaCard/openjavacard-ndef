@@ -1,7 +1,5 @@
 package org.aispring.javacard.ndef.client.util;
 
-import javacard.framework.ISO7816;
-
 import javax.smartcardio.CommandAPDU;
 
 /**
@@ -12,6 +10,14 @@ import javax.smartcardio.CommandAPDU;
  * This fills some convenience and debuggability gaps in the smartcard API.
  */
 public class APDUUtil {
+
+    private static final int OFFSET_CLA = 0;
+    private static final int OFFSET_INS = 1;
+    private static final int OFFSET_P1 = 2;
+    private static final int OFFSET_P2 = 3;
+    private static final int OFFSET_LC = 4;
+    private static final int OFFSET_CDATA = 5;
+
 
     /**
      * Convenience method for building command APDUs
@@ -87,15 +93,15 @@ public class APDUUtil {
             length += data.length;
         }
         byte[] command = new byte[length];
-        command[ISO7816.OFFSET_CLA] = cla;
-        command[ISO7816.OFFSET_INS] = ins;
-        command[ISO7816.OFFSET_P1] = p1;
-        command[ISO7816.OFFSET_P2] = p2;
+        command[OFFSET_CLA] = cla;
+        command[OFFSET_INS] = ins;
+        command[OFFSET_P1] = p1;
+        command[OFFSET_P2] = p2;
         if (data == null || data.length == 0) {
-            command[ISO7816.OFFSET_LC] = 0;
+            command[OFFSET_LC] = 0;
         } else {
-            command[ISO7816.OFFSET_LC] = (byte) data.length;
-            System.arraycopy(data, 0, command, ISO7816.OFFSET_CDATA, data.length);
+            command[OFFSET_LC] = (byte) data.length;
+            System.arraycopy(data, 0, command, OFFSET_CDATA, data.length);
         }
         return new CommandAPDU(command);
     }
