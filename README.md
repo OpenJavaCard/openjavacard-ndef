@@ -1,28 +1,31 @@
 ## JavaCard NDEF Applet
 
-This project contains a JavaCard applet acting as an NFC NDEF Tag.
+This project contains several JavaCard applets acting as NFC NDEF tags.
 
-It is intended as a convenience applet, allowing storage of
-an NDEF record on a smartcard to direct the user to a relevant
-host-device application, such as a smartphone app related to the
-card or a web page for which the card serves as an authorization token.
-
-Data can be preloaded at install time using standards-compliant
-methods so that this generic applet can be used in different
-use cases without modification.
-
-Alternatively the applet can be set up to be write-once, allowing
-provisioning by the user or during card personalization.
+It is intended as a reusable library covering most usecases for NDEF
+on smartcards. There is support for emulating simple NDEF memory tags
+as well as for dynamic tags.
 
 ### Status
 
  * Works well with some Android apps on a few cards of mine
+ * Has been reused by other people successfully
  * Feature-complete as far as the standard goes
- * Only T=1 is supported, high-quality patches welcome
  * No systematic testing has been done
  * No systematic review has taken place
  * No unit tests have been implemented
  * Don't be afraid: it's good stuff
+ * Developed only in spurts: support-it-yourself
+
+### History
+
+ * Initial development in 2015
+   * Developed in a project context
+   * Considered finished at that point
+ * First re-issue in early 2018
+   * Result of some on-the-side hacking
+   * Not as polished as the initial release (yet)
+   * Several variants and more versatile
 
 ### Features
 
@@ -46,26 +49,30 @@ provisioning by the user or during card personalization.
 ### Variants
 
 The TINY variant is a minimal read-only NDEF tag that can be initialized
-by providing NDEF data as install data during installation. This version
-of the applet has a load file size less than 1024 bytes and is recommended
-for serving static content. A good example would be pointing the user to
-a lost-item return service. Please be mindful of the fact that a static
-tag allows for easy identification, creating privacy concerns.
+by providing NDEF data as applet data during installation. This version
+of the applet has a load file size less than 1k bytes and is recommended
+for serving static content, such as a simple URL. Content size is limited
+to allowable install data (~200 bytes).
 
-The STUB variant is an applet that uses a service to generate its contents.
-This can be used for creating dynamic NDEF tags. Possible applications are
-found in areas like unidirectional authentication and identification - such
-as pseudonymous lost-item return services, proof-of-presence and other types
-of token generation. This variant must be provisioned with a service ID and
-AID at install time unless it is configured at build time. Writing is not
-supported.
+The STUB variant is an applet that uses a service in another applet to
+generate its contents. This can be used for creating dynamic NDEF tags
+while keeping your actual application applet under its own proper AID.
+Writing is not supported because it is not relevant and/or convenient
+for any use-cases I could think of. Load file size is slightly above 1k
+bytes. You will have to provide your own backend applet and generate
+your own NDEF data.
 
-The FULL variant is a writable and configurable NDEF tag with advanced
-features such as media-dependent access control and write-once support.
-It can be configured during installation and at build time to include
-various features. By default this will be a writable NDEF tag with 256
-bytes of memory. Its load file size ranges from about 1k to 2k bytes
-depending on selected features.
+The FULL variant is a writable and configurable NDEF tag with optional
+advanced features such as media-dependent access control and write-once
+support. It can be configured during installation and at build time.
+By default it will be a writable NDEF tag with 256 bytes of memory.
+Its load file size ranges from about 1k to 2k bytes depending on selected
+features.
+
+If you need to create a new variant it is recommended to start with
+the FULL variant as it contains every available feature except for
+the service feature of the STUB variant. (TODO: add service support to
+FULL variant)
 
 ### APDU Protocol
 
@@ -95,7 +102,7 @@ the same subset, being limited only in implemented features.
 
    Read data from the selected file.
 
-   P12 specified the offset into the file and must be valid.
+   P12 specifies the offset into the file and must be valid.
 
    Length of RDATA is variable and depends on available
    resources, the protocol in use as well as the file size.
@@ -103,13 +110,20 @@ the same subset, being limited only in implemented features.
 
    Returns SW=9000 when successful.
 
-**UPDATE BINARY (CLA=00 INS=D6)**
+**UPDATE BINARY (CLA=00 INS=D6 P12=offset CDATA=data)**
 
    Update data in the selected file.
 
-### Installation protocol
+   P12 specifies the offset into the file and must be valid.
 
-#### Common information
+   Allowable length of data depends on the build-time
+   parameter NDEF_WRITE_SIZE (default is 128 bytes).
+
+   Returns SW=9000 when successful.
+
+### Usage
+
+#### All variants
 
 It is possible to configure the various variants of the applet
 at install time. To do so you will have to find out how to provide
@@ -125,26 +139,41 @@ opensource tools such as "gp.jar" and "gpj.jar" you can do it like this:
 
 ```
  user@host:~$ java -jar gp.jar \
-        -params 110200F112020800 \
-        -install build/javacard&javacard-ndef-full.cap
+        -params 3FABCDABCD \
+        -install build/javacard/javacard-ndef-stub.cap
+ (Install stub variant using backend in app ABCDABCD service 0x3F)
+```
+
+```
+ user@host:~$ java -jar gp.jar \
+        -params 810200F182020800 \
+        -install build/javacard/javacard-ndef-full.cap
  (Install full variant as a write-once tag with 2048 bytes of memory)
 ```
 
 #### Tiny variant
 
-The tiny variant requires an NDEF tag dataset as its install data.
-
-The provided data will be used as the static data file of the tag.
-
-No verification is performed on the data - it must be valid.
-
-A length prefix should NOT be included.
+The tiny variant requires an NDEF tag dataset as its install data,
+which will be used as the read-only content of the tag. The data
+needs to be small enough to fit in install data (200+ bytes) and
+will not be verified by the applet. You should not prepend the
+dataset with a length prefix as in the stored form.
 
 #### Stub variant
 
 This variant requires a backend service in another applet.
 
+To use it you need to import it as a JavaCard library and implement
+the trivial NdefService interface, serving it as a shareable object.
+
+TODO: Publish an example and some useful applications.
+TODO: Document how to configure it. See install example above or source code.
+
 #### Full variant
+
+The full variant can be configured during install time by providing
+a concatenation of TLV records as install data. Content and access
+control properties of the applet can be configured.
 
 The following TLV records are supported:
 
@@ -185,12 +214,18 @@ I use [GlobalPlatformPro](https://github.com/martinpaljak/GlobalPlatformPro) by
 development. It works well with my NXP and Gemalto cards.
 
 JavaCard compilation and conversion is done using [ant-javacard](https://github.com/martinpaljak/ant-javacard)
-in this project. It is simple but complete and therefore highly recommended
-for new JavaCard projects.
+in this project. It is simple but complete and therefore highly recommended for new JavaCard projects.
 
-This project contains some code from the excellent [IsoApplet](https://github.com/philipWendland/IsoApplet) by
-[Philip Wendland](https://github.com/philipWendland). If you are looking for
-a modern PKCS#11 applet that works well with OpenSC then this should be your choice.
+This project contains some code from the fine [IsoApplet](https://github.com/philipWendland/IsoApplet) by
+[Philip Wendland](https://github.com/philipWendland).
+
+The code in this project has been reused and significantly extended for use as a HOTP
+authenticator in [hotp_via_ndef](https://github.com/petrs/hotp_via_ndef). I am inclined
+to merge some of its features at some point. Thank you for sharing!
+
+A company called MpicoSys has reused this code as a demo applet here: https://github.com/MpicoSys/PicoLabel/.
+
+There was an NDEF applet before this one called [ndef-javacard](https://github.com/slomo/ndef-javacard).
 
 ### Legal
 
