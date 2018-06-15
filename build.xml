@@ -19,7 +19,7 @@
     <!-- Build-all target -->
     <target name="build"
             description="build everything"
-            depends="build-client,build-full-proguard,build-tiny-proguard,build-stub-proguard">
+            depends="build-client,build-full-plain,build-tiny-plain,build-stub-plain">
     </target>
 
     <!-- Target for updating in-repository prebuilt files -->
