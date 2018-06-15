@@ -1,0 +1,4 @@
+language: java
+install: ant
+jdk:
+  - openjdk8
