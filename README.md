@@ -1,10 +1,12 @@
-## JavaCard NDEF Applet
+## OpenJavaCard NDEF
 
 This project contains several JavaCard applets acting as NFC NDEF tags.
 
 It is intended as a reusable library covering most usecases for NDEF
 on smartcards. There is support for emulating simple NDEF memory tags
 as well as for dynamic tags.
+
+[![Build Status](https://travis-ci.org/OpenJavaCard/openjavacard-ndef.svg?branch=master)](https://travis-ci.org/OpenJavaCard/openjavacard-ndef)
 
 ### Status
 
