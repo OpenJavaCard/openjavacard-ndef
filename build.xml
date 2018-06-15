@@ -6,7 +6,7 @@
     <description>JavaCard implementation of an NDEF Type 4 tag</description>
 
     <!-- Point this to your JavaCard kit -->
-    <property name="jckit" value="/opt/javacard-2.2.2"/>
+    <property name="jckit" value="ext/javacard-sdks/jc222_kit"/>
     <!-- Point this to your Proguard kit -->
     <property name="proguard" value="/opt/proguard"/>
 
