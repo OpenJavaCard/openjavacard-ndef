@@ -22,6 +22,9 @@
             depends="build-client,build-full-plain,build-tiny-plain,build-stub-plain">
     </target>
 
+	<!-- Dummy test target -->
+	<target name="test"/>
+
     <!-- Target for updating in-repository prebuilt files -->
     <target name="prebuilt"
             description="update prebuilt files"
