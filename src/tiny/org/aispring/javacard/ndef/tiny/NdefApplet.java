@@ -149,14 +149,16 @@ public final class NdefApplet extends Applet {
      * @param len length of app data in buf
      */
     protected NdefApplet(byte[] buf, short off, byte len) {
+        // length of actual data file
+        short dataLen = (short)(len + 2);
         // create transient variables
         vars = JCSystem.makeTransientShortArray(NUM_VARS, JCSystem.CLEAR_ON_DESELECT);
         // create capabilities files
-        capsFile = makeCaps(len);
+        capsFile = makeCaps(dataLen);
         // create data file
-        short dataLen = (short)(len + 2);
-        byte[] data = new byte[dataLen];
+        byte[] data = null;
         if (len > 0) {
+            data = new byte[dataLen];
             // container size
             Util.setShort(data, (short) 0, len);
             // initial data
