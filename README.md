@@ -8,6 +8,10 @@ as well as for dynamic tags.
 
 [![Build Status](https://travis-ci.org/OpenJavaCard/openjavacard-ndef.svg?branch=master)](https://travis-ci.org/OpenJavaCard/openjavacard-ndef)
 
+### Project
+
+For more information about this overall project, see our [website](https://openjavacard.org/).
+
 ### Status
 
  * Works well with some Android apps on a few cards of mine
