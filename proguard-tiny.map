@@ -1,4 +1,4 @@
-org.aispring.javacard.ndef.tiny.NdefApplet -> tiny.A:
+org.openjavacard.ndef.tiny.NdefApplet -> tiny.A:
     short selectedFile -> a
     byte[] capsFile -> b
     byte[] dataFile -> c
