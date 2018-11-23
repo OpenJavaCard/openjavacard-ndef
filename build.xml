@@ -83,7 +83,7 @@
             <fileset dir="build/classes/client"/>
             <manifest>
                 <attribute name="Main-Class"
-                           value="org.aispring.javacard.ndef.client.Main"/>
+                           value="org.openjavacard.ndef.client.Main"/>
             </manifest>
         </jar>
     </target>
@@ -105,9 +105,10 @@
             <cap output="build/javacard/javacard-ndef-full-plain.cap"
                  jar="build/javacard/javacard-ndef-full-plain.jar"
                  classes="build/classes/full-plain"
+                 aid="d27600017712010101"
                  version="1.0">
-                <applet aid="D2760000850101"
-                        class="org.aispring.javacard.ndef.full.NdefApplet"/>
+                <applet aid="d2760001771201010101"
+                        class="org.openjavacard.ndef.full.NdefApplet"/>
             </cap>
         </javacard>
     </target>
@@ -136,8 +137,9 @@
             <cap output="build/javacard/javacard-ndef-full-proguard.cap"
                  jar="build/javacard/javacard-ndef-full-proguard.jar"
                  classes="build/classes/full-proguard"
+                 aid="d27600017712010101"
                  version="1.0">
-                <applet aid="D2760000850101"
+                <applet aid="d2760001771201010101"
                         class="full.A"/>
             </cap>
         </javacard>
@@ -160,9 +162,10 @@
             <cap output="build/javacard/javacard-ndef-stub-plain.cap"
                  jar="build/javacard/javacard-ndef-stub-plain.jar"
                  classes="build/classes/stub-plain"
+                 aid="d27600017712010102"
                  version="1.0">
-                <applet aid="D2760000850101"
-                        class="org.aispring.javacard.ndef.stub.NdefApplet"/>
+                <applet aid="d2760001771201010201"
+                        class="org.openjavacard.ndef.stub.NdefApplet"/>
             </cap>
         </javacard>
     </target>
@@ -193,9 +196,10 @@
             <cap output="build/javacard/javacard-ndef-stub-proguard.cap"
                  jar="build/javacard/javacard-ndef-stub-proguard.jar"
                  classes="build/classes/stub-proguard"
+                 aid="d27600017712010102"
                  version="1.0">
-                <applet aid="D2760000850101"
-                        class="org.aispring.javacard.ndef.stub.NdefApplet"/>
+                <applet aid="d2760001771201010201"
+                        class="org.openjavacard.ndef.stub.NdefApplet"/>
             </cap>
         </javacard>
     </target>
@@ -217,9 +221,10 @@
             <cap output="build/javacard/javacard-ndef-tiny-plain.cap"
                  jar="build/javacard/javacard-ndef-tiny-plain.jar"
                  classes="build/classes/tiny-plain"
+                 aid="d27600017712010103"
                  version="1.0">
-                <applet aid="D2760000850101"
-                        class="org.aispring.javacard.ndef.tiny.NdefApplet"/>
+                <applet aid="d2760001771201010301"
+                        class="org.openjavacard.ndef.tiny.NdefApplet"/>
             </cap>
         </javacard>
     </target>
@@ -248,8 +253,9 @@
             <cap output="build/javacard/javacard-ndef-tiny-proguard.cap"
                  jar="build/javacard/javacard-ndef-tiny-proguard.jar"
                  classes="build/classes/tiny-proguard"
+                 aid="d27600017712010103"
                  version="1.0">
-                <applet aid="D2760000850101"
+                <applet aid="d2760001771201010301"
                         class="tiny.A"/>
             </cap>
         </javacard>
