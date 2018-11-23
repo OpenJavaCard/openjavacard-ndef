@@ -1,4 +1,4 @@
-package org.aispring.javacard.ndef.client;
+package org.openjavacard.ndef.client;
 
 public interface NdefProtocol {
 

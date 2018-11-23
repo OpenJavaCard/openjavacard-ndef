@@ -1,6 +1,6 @@
-package org.aispring.javacard.ndef.client;
+package org.openjavacard.ndef.client;
 
-import org.aispring.javacard.ndef.client.util.BinUtil;
+import org.openjavacard.ndef.client.util.BinUtil;
 
 public class NdefFile {
     short fileId;

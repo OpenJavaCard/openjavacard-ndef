@@ -1,7 +1,7 @@
-package org.aispring.javacard.ndef.client;
+package org.openjavacard.ndef.client;
 
-import org.aispring.javacard.ndef.client.util.APDUUtil;
-import org.aispring.javacard.ndef.client.util.BinUtil;
+import org.openjavacard.ndef.client.util.APDUUtil;
+import org.openjavacard.ndef.client.util.BinUtil;
 
 import javax.smartcardio.*;
 import java.io.ByteArrayOutputStream;

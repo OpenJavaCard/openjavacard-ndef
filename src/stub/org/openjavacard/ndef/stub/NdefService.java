@@ -1,4 +1,4 @@
-package org.aispring.javacard.ndef.stub;
+package org.openjavacard.ndef.stub;
 
 public interface NdefService {
     byte[] getData();

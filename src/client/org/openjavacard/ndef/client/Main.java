@@ -1,6 +1,6 @@
-package org.aispring.javacard.ndef.client;
+package org.openjavacard.ndef.client;
 
-import org.aispring.javacard.ndef.client.util.HexUtil;
+import org.openjavacard.ndef.client.util.HexUtil;
 
 import javax.smartcardio.*;
 import java.io.PrintStream;

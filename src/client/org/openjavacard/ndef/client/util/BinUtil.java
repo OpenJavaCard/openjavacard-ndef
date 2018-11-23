@@ -1,4 +1,4 @@
-package org.aispring.javacard.ndef.client.util;
+package org.openjavacard.ndef.client.util;
 
 import java.util.Arrays;
 
