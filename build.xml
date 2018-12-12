@@ -79,7 +79,7 @@
                source="1.8" target="1.8">
             <classpath path="${jckit}/lib/api.jar"/>
         </javac>
-        <jar destfile="build/jar/javacard-ndef-client.jar">
+        <jar destfile="build/jar/openjavacard-ndef-client.jar">
             <fileset dir="build/classes/client"/>
             <manifest>
                 <attribute name="Main-Class"
@@ -91,7 +91,7 @@
     <target name="build-full-plain"
             depends="ext-javacard,build-dirs">
         <!-- Compile code -->
-        <javac srcdir="src/full"
+        <javac srcdir="src/applet-full"
                destdir="build/classes/full-plain"
                classpath="${jckit}/lib/api.jar"
                includeantruntime="false"
@@ -102,12 +102,12 @@
         </javac>
         <!-- Plain CAP file -->
         <javacard jckit="${jckit}">
-            <cap output="build/javacard/javacard-ndef-full-plain.cap"
-                 jar="build/javacard/javacard-ndef-full-plain.jar"
+            <cap output="build/javacard/openjavacard-ndef-full-plain.cap"
+                 jar="build/javacard/openjavacard-ndef-full-plain.jar"
                  classes="build/classes/full-plain"
-                 aid="d27600017712010101"
-                 version="1.0">
-                <applet aid="d2760001771201010101"
+                 aid="D276000177100211010001"
+                 version="0.0">
+                <applet aid="D27600017710021101000101"
                         class="org.openjavacard.ndef.full.NdefApplet"/>
             </cap>
         </javacard>
@@ -124,7 +124,7 @@
             -applymapping proguard-full.map
             -injars build/classes/full-plain
             -outjars build/classes/full-proguard
-            -printmapping build/javacard/javacard-ndef-full-proguard.map
+            -printmapping build/javacard/openjavacard-ndef-full-proguard.map
             -libraryjars ${jckit}/lib/api.jar
             -dontwarn java.lang.Class
             -allowaccessmodification
@@ -134,12 +134,12 @@
         </proguard>
         <!-- Obfuscated CAP file -->
         <javacard jckit="${jckit}">
-            <cap output="build/javacard/javacard-ndef-full-proguard.cap"
-                 jar="build/javacard/javacard-ndef-full-proguard.jar"
+            <cap output="build/javacard/openjavacard-ndef-full-proguard.cap"
+                 jar="build/javacard/openjavacard-ndef-full-proguard.jar"
                  classes="build/classes/full-proguard"
-                 aid="d27600017712010101"
-                 version="1.0">
-                <applet aid="d2760001771201010101"
+                 aid="D276000177100211110001"
+                 version="0.0">
+                <applet aid="D27600017710021111000101"
                         class="full.A"/>
             </cap>
         </javacard>
@@ -148,7 +148,7 @@
     <target name="build-stub-plain"
             depends="ext-javacard,build-dirs">
         <!-- Compile code -->
-        <javac srcdir="src/stub"
+        <javac srcdir="src/applet-stub"
                destdir="build/classes/stub-plain"
                classpath="${jckit}/lib/api.jar"
                includeantruntime="false"
@@ -159,12 +159,12 @@
         </javac>
         <!-- Plain CAP file -->
         <javacard jckit="${jckit}">
-            <cap output="build/javacard/javacard-ndef-stub-plain.cap"
-                 jar="build/javacard/javacard-ndef-stub-plain.jar"
+            <cap output="build/javacard/openjavacard-ndef-stub-plain.cap"
+                 jar="build/javacard/openjavacard-ndef-stub-plain.jar"
                  classes="build/classes/stub-plain"
-                 aid="d27600017712010102"
-                 version="1.0">
-                <applet aid="d2760001771201010201"
+                 aid="D276000177100211020001"
+                 version="0.0">
+                <applet aid="D27600017710021102000101"
                         class="org.openjavacard.ndef.stub.NdefApplet"/>
             </cap>
         </javacard>
@@ -180,7 +180,7 @@
             -ignorewarnings
             -injars build/classes/stub-plain
             -outjars build/classes/stub-proguard
-            -printmapping build/javacard/javacard-ndef-stub-proguard.map
+            -printmapping build/javacard/openjavacard-ndef-stub-proguard.map
             -libraryjars ${jckit}/lib/api.jar
             -dontwarn java.lang.Class
             -allowaccessmodification
@@ -193,12 +193,12 @@
         </proguard>
         <!-- Obfuscated CAP file -->
         <javacard jckit="${jckit}">
-            <cap output="build/javacard/javacard-ndef-stub-proguard.cap"
-                 jar="build/javacard/javacard-ndef-stub-proguard.jar"
+            <cap output="build/javacard/openjavacard-ndef-stub-proguard.cap"
+                 jar="build/javacard/openjavacard-ndef-stub-proguard.jar"
                  classes="build/classes/stub-proguard"
-                 aid="d27600017712010102"
-                 version="1.0">
-                <applet aid="d2760001771201010201"
+                 aid="D276000177100211120001"
+                 version="0.0">
+                <applet aid="D27600017710021112000101"
                         class="org.openjavacard.ndef.stub.NdefApplet"/>
             </cap>
         </javacard>
@@ -207,7 +207,7 @@
     <target name="build-tiny-plain"
             depends="ext-javacard,build-dirs">
         <!-- Compile code -->
-        <javac srcdir="src/tiny"
+        <javac srcdir="src/applet-tiny"
                destdir="build/classes/tiny-plain"
                classpath="${jckit}/lib/api.jar"
                includeantruntime="false"
@@ -218,12 +218,12 @@
         </javac>
         <!-- Plain CAP file -->
         <javacard jckit="${jckit}">
-            <cap output="build/javacard/javacard-ndef-tiny-plain.cap"
-                 jar="build/javacard/javacard-ndef-tiny-plain.jar"
+            <cap output="build/javacard/openjavacard-ndef-tiny-plain.cap"
+                 jar="build/javacard/openjavacard-ndef-tiny-plain.jar"
                  classes="build/classes/tiny-plain"
-                 aid="d27600017712010103"
-                 version="1.0">
-                <applet aid="d2760001771201010301"
+                 aid="D276000177100211030001"
+                 version="0.0">
+                <applet aid="D27600017710021103000101"
                         class="org.openjavacard.ndef.tiny.NdefApplet"/>
             </cap>
         </javacard>
@@ -240,7 +240,7 @@
             -applymapping proguard-tiny.map
             -injars build/classes/tiny-plain
             -outjars build/classes/tiny-proguard
-            -printmapping build/javacard/javacard-ndef-tiny-proguard.map
+            -printmapping build/javacard/openjavacard-ndef-tiny-proguard.map
             -libraryjars ${jckit}/lib/api.jar
             -dontwarn java.lang.Class
             -allowaccessmodification
@@ -250,12 +250,12 @@
         </proguard>
         <!-- Obfuscated CAP file -->
         <javacard jckit="${jckit}">
-            <cap output="build/javacard/javacard-ndef-tiny-proguard.cap"
-                 jar="build/javacard/javacard-ndef-tiny-proguard.jar"
+            <cap output="build/javacard/openjavacard-ndef-tiny-proguard.cap"
+                 jar="build/javacard/openjavacard-ndef-tiny-proguard.jar"
                  classes="build/classes/tiny-proguard"
-                 aid="d27600017712010103"
-                 version="1.0">
-                <applet aid="d2760001771201010301"
+                 aid="D276000177100211130001"
+                 version="0.0">
+                <applet aid="D27600017710021113000101"
                         class="tiny.A"/>
             </cap>
         </javacard>
