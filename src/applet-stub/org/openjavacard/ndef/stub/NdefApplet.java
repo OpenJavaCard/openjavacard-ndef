@@ -22,7 +22,7 @@ package org.openjavacard.ndef.stub;
 import javacard.framework.*;
 
 /**
- * \brief Applet implementing an NDEF type 4 service-based tag
+ * \brief Applet implementing an NDEF type 4 tag using a service
  *
  * This is the STUB variant of the applet.
  *

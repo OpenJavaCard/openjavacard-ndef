@@ -22,12 +22,16 @@ package org.openjavacard.ndef.tiny;
 import javacard.framework.*;
 
 /**
- * \brief Applet implementing an NDEF type 4 read-only tag
+ * \brief Applet implementing a read-only NDEF type 4 tag
  *
- * This is the TINY variant of the applet.
+ * This is the TINY variant of the applet, intended as a permanent
+ * read-only tag. It can be used to direct users to an application
+ * or website appropriate to your card.
  *
  * No writing is supported. Data must be initialized by providing
- * an NDEF record directly in the applet initialization data.
+ * raw NDEF data as an applet installation parameter. No verification
+ * on the data is performed. The length indicator is appended by the
+ * applet and should not be included.
  *
  * Implemented to comply with:
  *   NFC Forum

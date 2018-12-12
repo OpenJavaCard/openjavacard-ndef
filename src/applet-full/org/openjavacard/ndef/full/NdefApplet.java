@@ -64,7 +64,7 @@ public final class NdefApplet extends Applet {
     /* NDEF mapping version (specification 2.0) */
     private static final byte NDEF_MAPPING_VERSION = (byte)0x20;
 
-    /* Applet data tags (initialization data) */
+    /* Install parameter tags */
     private static final byte AD_TAG_NDEF_DATA_INITIAL = (byte)0x80;
     private static final byte AD_TAG_NDEF_DATA_ACCESS  = (byte)0x81;
     private static final byte AD_TAG_NDEF_DATA_SIZE    = (byte)0x82;
