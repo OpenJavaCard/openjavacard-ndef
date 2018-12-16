@@ -23,6 +23,29 @@ For more information about this overall project, see our [website](https://openj
  * Don't be afraid: it's good stuff
  * Developed only in spurts: support-it-yourself
 
+### Compatibility
+
+With applications and clients:
+
+ * Works with Android NFC support
+ * NXP TagInfo mostly works
+ * NXP TagWriter cannot write to the applet
+ * GoToTags has compatibility issues
+ * Some Arduino libraries do not work
+
+With cards:
+
+ * ACS ACOSJ - fully working
+ * NXP JCOP J3D040/J3D081/J2E145 etc - fully working
+
+Card requirements:
+
+ * Support for JavaCard 2.2 or higher
+ * Code memory: between 1k and 4k depending on variant
+ * Data memory: from a few bytes up to 32k
+ * No optional features required
+ * Object deletion not required
+
 ### History
 
  * Initial development in 2015
