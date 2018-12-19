@@ -2,7 +2,6 @@ package org.openjavacard.ndef.client;
 
 import org.openjavacard.ndef.client.util.HexUtil;
 
-import javax.smartcardio.*;
 import java.io.PrintStream;
 import java.util.Arrays;
 

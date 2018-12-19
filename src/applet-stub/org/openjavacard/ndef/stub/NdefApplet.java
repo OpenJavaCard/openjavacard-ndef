@@ -19,7 +19,14 @@
 
 package org.openjavacard.ndef.stub;
 
-import javacard.framework.*;
+import javacard.framework.AID;
+import javacard.framework.APDU;
+import javacard.framework.Applet;
+import javacard.framework.ISO7816;
+import javacard.framework.ISOException;
+import javacard.framework.JCSystem;
+import javacard.framework.Shareable;
+import javacard.framework.Util;
 
 /**
  * \brief Applet implementing an NDEF type 4 tag using a service

@@ -3,7 +3,6 @@ package org.openjavacard.ndef.client;
 import org.openjavacard.ndef.client.util.APDUUtil;
 import org.openjavacard.ndef.client.util.BinUtil;
 
-import javax.smartcardio.*;
 import java.io.ByteArrayOutputStream;
 import java.util.Arrays;
 

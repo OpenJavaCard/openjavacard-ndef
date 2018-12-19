@@ -19,7 +19,12 @@
 
 package org.openjavacard.ndef.tiny;
 
-import javacard.framework.*;
+import javacard.framework.APDU;
+import javacard.framework.Applet;
+import javacard.framework.ISO7816;
+import javacard.framework.ISOException;
+import javacard.framework.JCSystem;
+import javacard.framework.Util;
 
 /**
  * \brief Applet implementing a read-only NDEF type 4 tag

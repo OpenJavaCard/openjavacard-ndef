@@ -1,7 +1,5 @@
 package org.openjavacard.ndef.client.util;
 
-import java.util.Arrays;
-
 /** Utilities related to treating integers as binary words */
 public class BinUtil {
 
