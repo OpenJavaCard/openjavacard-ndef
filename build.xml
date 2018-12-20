@@ -19,7 +19,7 @@
     <!-- Build-all target -->
     <target name="build"
             description="build everything"
-            depends="build-client,build-full-plain,build-tiny-plain,build-stub-plain">
+            depends="build-full-plain,build-tiny-plain,build-stub-plain">
     </target>
 
 	<!-- Dummy test target -->
