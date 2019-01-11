@@ -174,7 +174,9 @@ public final class NdefApplet extends Applet {
         if(len < 6 || len > 17) {
             ISOException.throwIt(ISO7816.SW_WRONG_DATA);
         }
+        // first byte is the service ID
         serviceID = buf[off++]; len--;
+        // rest is the service AID
         serviceAID = new byte[len];
         Util.arrayCopyNonAtomic(buf, off, serviceAID, (short)0, len);
     }

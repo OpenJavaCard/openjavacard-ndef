@@ -35,8 +35,8 @@ import javacard.framework.Util;
  *
  * No writing is supported. Data must be initialized by providing
  * raw NDEF data as an applet installation parameter. No verification
- * on the data is performed. The length indicator is appended by the
- * applet and should not be included.
+ * on the data is performed. The length indicator is prepended by the
+ * applet and should not be included in the install parameter.
  *
  * Implemented to comply with:
  *   NFC Forum
