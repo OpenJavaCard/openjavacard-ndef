@@ -1,0 +1,44 @@
+apply plugin: 'idea'
+
+repositories {
+    mavenCentral()
+}
+
+buildscript {
+    repositories {
+        maven { url 'http://releases.marmeladburk.fidesmo.com/' }
+    }
+
+    dependencies {
+        classpath 'com.fidesmo:gradle-javacard:0.2.7'
+    }
+}
+
+
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: 'maven'
+
+    group 'org.openjavacard.tools'
+    version '0.1-SNAPSHOT'
+
+    repositories {
+        mavenCentral()
+    }
+
+    idea {
+        module {
+            downloadJavadoc = true
+            downloadSources = true
+        }
+    }
+
+    test {
+        testLogging {
+            // set options for log level LIFECYCLE
+            events "passed", "skipped", "failed"
+            exceptionFormat "full"
+        }
+    }
+}
