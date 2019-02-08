@@ -231,7 +231,6 @@ public final class NdefApplet extends Applet {
      * @param apdu to be processed
      * @throws ISOException on error
      */
-    @Override
     public final void process(APDU apdu) throws ISOException {
         byte[] buffer = apdu.getBuffer();
         byte ins = buffer[ISO7816.OFFSET_INS];
