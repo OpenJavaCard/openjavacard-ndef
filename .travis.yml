@@ -1,4 +1,6 @@
 language: java
-install: ant
 jdk:
   - openjdk8
+script:
+  - ant build
+  - ant check
