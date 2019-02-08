@@ -1,9 +1,8 @@
 apply plugin: 'javacard'
 
+archivesBaseName = 'openjavacard-ndef-stub'
+
 buildscript {
-    repositories {
-        maven { url 'http://releases.marmeladburk.fidesmo.com/' }
-    }
     dependencies {
         classpath 'com.fidesmo:gradle-javacard:0.2.7'
     }

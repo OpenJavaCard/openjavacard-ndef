@@ -1,20 +1,5 @@
 apply plugin: 'idea'
 
-repositories {
-    mavenCentral()
-}
-
-buildscript {
-    repositories {
-        maven { url 'http://releases.marmeladburk.fidesmo.com/' }
-    }
-
-    dependencies {
-        classpath 'com.fidesmo:gradle-javacard:0.2.7'
-    }
-}
-
-
 allprojects {
     apply plugin: 'java'
     apply plugin: 'idea'
@@ -23,8 +8,10 @@ allprojects {
     group 'org.openjavacard.tools'
     version '0.1-SNAPSHOT'
 
-    repositories {
-        mavenCentral()
+    buildscript {
+        repositories {
+            maven { url 'http://releases.marmeladburk.fidesmo.com/' }
+        }
     }
 
     idea {
