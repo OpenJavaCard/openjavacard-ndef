@@ -1,0 +1,7 @@
+gp-load --reload \
+	build/javacard/openjavacard-ndef-full-plain.cap
+
+gp-install --reinstall \
+	--package D276000177100211010001 \
+	--module D27600017710021101000101 \
+	--aid D2760000850101
