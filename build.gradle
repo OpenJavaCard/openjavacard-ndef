@@ -5,8 +5,13 @@ allprojects {
     apply plugin: 'idea'
     apply plugin: 'maven'
 
-    group 'org.openjavacard.tools'
+    group 'org.openjavacard.ndef'
     version '0.1-SNAPSHOT'
+
+    repositories {
+        mavenCentral()
+        mavenLocal()
+    }
 
     buildscript {
         repositories {

@@ -1,3 +1,5 @@
+include 'library-generator'
 include 'applet-full'
 include 'applet-stub'
 include 'applet-tiny'
+//include 'client'
