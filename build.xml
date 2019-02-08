@@ -91,7 +91,7 @@
     <target name="build-full-plain"
             depends="ext-javacard,build-dirs">
         <!-- Compile code -->
-        <javac srcdir="src/applet-full"
+        <javac srcdir="applet-full/src/main/java"
                destdir="build/classes/full-plain"
                classpath="${jckit}/lib/api.jar"
                includeantruntime="false"
@@ -148,7 +148,7 @@
     <target name="build-stub-plain"
             depends="ext-javacard,build-dirs">
         <!-- Compile code -->
-        <javac srcdir="src/applet-stub"
+        <javac srcdir="applet-stub/src/main/java"
                destdir="build/classes/stub-plain"
                classpath="${jckit}/lib/api.jar"
                includeantruntime="false"
@@ -207,7 +207,7 @@
     <target name="build-tiny-plain"
             depends="ext-javacard,build-dirs">
         <!-- Compile code -->
-        <javac srcdir="src/applet-tiny"
+        <javac srcdir="applet-tiny/src/main/java"
                destdir="build/classes/tiny-plain"
                classpath="${jckit}/lib/api.jar"
                includeantruntime="false"
