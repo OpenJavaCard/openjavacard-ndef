@@ -111,27 +111,28 @@ the same subset, being limited only in implemented features.
 
 **SELECT (CLA=00 INS=A4 P1=00 P2=0C CDATA=fid)**
 
+    P1=00 means "SELECT BY FILEID"
+    P2=0C means "SELECT FIRST OR ONLY"
+    Other selection modes are not supported.
+
    Select a file in the applet.
-
-   P1=00 means "SELECT BY FILEID"
-   P2=0C means "SELECT FIRST OR ONLY"
-   Other selection modes are not supported.
-
-   There are two files on the card:
-     * 0xE103 - NDEF capabilities
-     * 0xE104 - NDEF data
 
    In exception to ISO7816 no FCI (file control information) will
    be returned, as permitted by NDEF specification requirement
    RQ_T4T_NDA_034.
 
+   There are two files on the card:
+
+     0xE103 - NDEF capabilities
+     0xE104 - NDEF data
+
    Returns SW=9000 when successful.
 
 **READ BINARY (CLA=00 INS=B0 P12=offset RDATA=output)**
 
-   Read data from the selected file.
+    P12 specifies the offset into the file and must be valid.
 
-   P12 specifies the offset into the file and must be valid.
+   Read data from the selected file.
 
    Length of RDATA is variable and depends on available
    resources, the protocol in use as well as the file size.
@@ -141,9 +142,9 @@ the same subset, being limited only in implemented features.
 
 **UPDATE BINARY (CLA=00 INS=D6 P12=offset CDATA=data)**
 
-   Update data in the selected file.
+    P12 specifies the offset into the file and must be valid.
 
-   P12 specifies the offset into the file and must be valid.
+   Update data in the selected file.
 
    Allowable length of data depends on the build-time
    parameter NDEF_WRITE_SIZE (default is 128 bytes).
@@ -253,13 +254,11 @@ The code in this project has been reused and significantly extended for use as a
 authenticator in [hotp_via_ndef](https://github.com/petrs/hotp_via_ndef). I am inclined
 to merge some of its features at some point. Thank you for sharing!
 
-A company called MpicoSys has reused this code as a demo applet here: https://github.com/MpicoSys/PicoLabel/.
-
 There was an NDEF applet before this one called [ndef-javacard](https://github.com/slomo/ndef-javacard).
 
 ### Legal
 
-Copyright 2015-2018 Ingo Albrecht
+Copyright 2015-2019 Ingo Albrecht
 
 This software is licensed under the GNU GPL Version 3.
 See the file LICENSE in the source tree for further information.
