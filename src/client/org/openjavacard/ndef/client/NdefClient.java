@@ -3,6 +3,11 @@ package org.openjavacard.ndef.client;
 import org.openjavacard.ndef.client.util.APDUUtil;
 import org.openjavacard.ndef.client.util.BinUtil;
 
+import javax.smartcardio.Card;
+import javax.smartcardio.CardChannel;
+import javax.smartcardio.CardException;
+import javax.smartcardio.CommandAPDU;
+import javax.smartcardio.ResponseAPDU;
 import java.io.ByteArrayOutputStream;
 import java.util.Arrays;
 
