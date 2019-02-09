@@ -1,6 +1,6 @@
 package org.openjavacard.ndef.client;
 
-import org.openjavacard.ndef.client.util.BinUtil;
+import org.openjavacard.util.BinUtil;
 
 public class NdefFile {
     short fileId;
