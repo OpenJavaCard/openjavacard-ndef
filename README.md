@@ -12,7 +12,7 @@ as well as for dynamic tags.
 
 For more information about this overall project, see our [website](https://openjavacard.org/).
 
-You can follow us on [Twitter](https://twitter.com/openjavacardorg) and chat with us on [Gitter](https://gitter.im/openjavacard).
+You can follow us on [Twitter](https://twitter.com/openjavacardorg) and chat with us on [Gitter](https://gitter.im/openjavacard/general).
 
 ### Status
 
