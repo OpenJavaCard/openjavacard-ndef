@@ -116,6 +116,7 @@ opensource tools such as "gp.jar" and "gpj.jar" you can do it like this:
 
 ```
  user@host:~$ java -jar gp.jar \
+        -applet D2760000850101 \
         -params 100BD101075402656E54657374 \
         -install build/javacard/javacard-ndef-tiny.cap
  (Install tiny variant with static text "Test")
@@ -123,6 +124,7 @@ opensource tools such as "gp.jar" and "gpj.jar" you can do it like this:
 
 ```
  user@host:~$ java -jar gp.jar \
+        -applet D2760000850101 \
         -params 3FABCDABCD \
         -install build/javacard/javacard-ndef-stub.cap
  (Install stub variant using backend in app ABCDABCD service 0x3F)
@@ -130,6 +132,7 @@ opensource tools such as "gp.jar" and "gpj.jar" you can do it like this:
 
 ```
  user@host:~$ java -jar gp.jar \
+        -applet D2760000850101 \
         -params 810200F182020800 \
         -install build/javacard/javacard-ndef-full.cap
  (Install full variant as a write-once tag with 2048 bytes of memory)
