@@ -1,7 +1,7 @@
 package org.openjavacard.ndef.client;
 
-import org.openjavacard.ndef.client.util.APDUUtil;
-import org.openjavacard.ndef.client.util.BinUtil;
+import org.openjavacard.util.APDUUtil;
+import org.openjavacard.util.BinUtil;
 
 import javax.smartcardio.Card;
 import javax.smartcardio.CardChannel;

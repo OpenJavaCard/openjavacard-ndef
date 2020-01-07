@@ -1,6 +1,6 @@
 package org.openjavacard.ndef.client;
 
-import org.openjavacard.ndef.client.util.HexUtil;
+import org.openjavacard.util.HexUtil;
 
 import javax.smartcardio.Card;
 import javax.smartcardio.CardException;
