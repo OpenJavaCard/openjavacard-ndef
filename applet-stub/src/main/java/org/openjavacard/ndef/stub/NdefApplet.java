@@ -235,20 +235,26 @@ public final class NdefApplet extends Applet {
      */
     private void connectService() {
         NdefService service = null;
+        // get AID object for service
         AID aid = JCSystem.lookupAID(serviceAID, (short)0, (byte)serviceAID.length);
         if(aid != null) {
+            // get service object
             Shareable share = JCSystem.getAppletShareableInterfaceObject(aid, serviceID);
+            // cast the service object
             if(share instanceof NdefService) {
                 service = (NdefService)share;
             }
         }
+        // check that we got a valid object
         if(service == null) {
             ISOException.throwIt(ISO7816.SW_CONDITIONS_NOT_SATISFIED);
         }
+        // retrieve the data array
         byte[] data = service.getData();
         if(data == null) {
             ISOException.throwIt(ISO7816.SW_CONDITIONS_NOT_SATISFIED);
         }
+        // remember both references
         refs[REF_SERVICE] = service;
         refs[REF_DATA] = data;
     }

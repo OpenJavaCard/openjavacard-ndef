@@ -134,12 +134,12 @@ public final class NdefApplet extends Applet {
     private static final short DEFAULT_NDEF_DATA_SIZE = 256;
 
     /**
-     * Configuration: read access
+     * Configuration: default read access for data file
      */
     private static final byte DEFAULT_NDEF_READ_ACCESS = FILE_ACCESS_OPEN;
 
     /**
-     * Configuration: write access
+     * Configuration: default write access for data file
      */
     private static final byte DEFAULT_NDEF_WRITE_ACCESS = FILE_ACCESS_OPEN;
 
