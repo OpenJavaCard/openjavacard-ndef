@@ -13,14 +13,12 @@ import java.util.Arrays;
 
 public class NdefClient {
 
-    private final Card mCard;
     private final CardChannel mChannel;
     private final byte[] mAID;
     private boolean mConnected;
     private NdefCapabilities mCapabilities;
 
     public NdefClient(CardChannel channel, byte[] aid) {
-        mCard = channel.getCard();
         mChannel = channel;
         mAID = aid;
         mConnected = false;
@@ -37,10 +35,6 @@ public class NdefClient {
 
     public NdefClient(Card card) {
         this(card.getBasicChannel(), NdefProtocol.AID_NDEF);
-    }
-
-    public Card getCard() {
-        return mCard;
     }
 
     public CardChannel getChannel() {
