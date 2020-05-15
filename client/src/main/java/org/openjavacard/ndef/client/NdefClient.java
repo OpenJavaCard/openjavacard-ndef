@@ -71,7 +71,6 @@ public class NdefClient {
 
     public void connect() throws CardException {
         try {
-            mCard.beginExclusive();
             performSelectApplet(mAID);
             mConnected = true;
             mCapabilities = readCapabilities();
@@ -84,10 +83,6 @@ public class NdefClient {
     public void disconnect() {
         mConnected = false;
         mCapabilities = null;
-        try {
-            mCard.endExclusive();
-        } catch (CardException e) {
-        }
     }
 
     public byte[] readData() throws CardException {
