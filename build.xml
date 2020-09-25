@@ -11,23 +11,23 @@
     <property name="proguard" value="/opt/proguard"/>
 
     <!-- Cleanup target -->
-    <target name="clean"
-            description="clean up">
+    <target name="clean" description="Delete build output">
         <delete dir="build"/>
     </target>
 
     <!-- Build-all target -->
-    <target name="build"
-            description="build everything"
-            depends="build-full-plain,build-tiny-plain,build-stub-plain">
+    <target name="build" description="Build everything">
+        <antcall target="build-full-plain"/>
+        <antcall target="build-tiny-plain"/>
+        <antcall target="build-stub-plain"/>
     </target>
 
 	<!-- Dummy test target -->
-	<target name="test"/>
+	<target name="test" description="Run tests" depends="build"/>
 
     <!-- Target for updating in-repository prebuilt files -->
     <target name="prebuilt"
-            description="update prebuilt files"
+            description="Update prebuilt files"
             depends="build">
         <delete dir="prebuilt"/>
         <copy todir="prebuilt">
