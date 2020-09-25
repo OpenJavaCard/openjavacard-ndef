@@ -5,21 +5,33 @@
 
     <description>JavaCard implementation of an NDEF Type 4 tag</description>
 
-    <!-- Point this to your JavaCard kit -->
-    <property name="jckit" value="ext/javacard-sdks/jc222_kit"/>
-    <!-- Point this to your Proguard kit -->
-    <property name="proguard" value="/opt/proguard"/>
+    <property name="ext.ant-javacard" value="ext/ant-javacard"/>
+
+    <property name="sdk.jc222" value="ext/javacard-sdks/jc222_kit"/>
 
     <!-- Cleanup target -->
     <target name="clean" description="Delete build output">
         <delete dir="build"/>
     </target>
 
+    <!-- Prepare build tools and directories -->
+    <target name="prepare" description="Prepare build">
+        <ant dir="ext/ant-javacard"/>
+        <taskdef name="javacard"
+                 classpath="${ext.ant-javacard}/ant-javacard.jar"
+                 classname="pro.javacard.ant.JavaCard"/>
+
+        <mkdir dir="build/javacard"/>
+        <mkdir dir="build/classes/full"/>
+        <mkdir dir="build/classes/stub"/>
+        <mkdir dir="build/classes/tiny"/>
+    </target>
+
     <!-- Build-all target -->
-    <target name="build" description="Build everything">
-        <antcall target="build-full-plain"/>
-        <antcall target="build-tiny-plain"/>
-        <antcall target="build-stub-plain"/>
+    <target name="build" description="Build everything" depends="prepare">
+        <antcall target="build-full"/>
+        <antcall target="build-tiny"/>
+        <antcall target="build-stub"/>
     </target>
 
 	<!-- Dummy test target -->
@@ -35,51 +47,12 @@
         </copy>
     </target>
 
-    <!-- Ant extension for JavaCard -->
-    <target name="ext-javacard">
-		<ant dir="ext/ant-javacard"/>
-        <taskdef name="javacard"
-                 classpath="ext/ant-javacard/ant-javacard.jar"
-                 classname="pro.javacard.ant.JavaCard"/>
-    </target>
-
-    <!-- Ant extensions for Proguard -->
-    <target name="ext-proguard">
-        <taskdef classpath="${proguard}/lib/proguard.jar"
-                 resource="proguard/ant/task.properties"/>
-    </target>
-
-    <!-- Create directories for build output -->
-    <target name="build-dirs">
-        <mkdir dir="build/jar"/>
-        <mkdir dir="build/javacard"/>
-        <mkdir dir="build/classes"/>
-        <mkdir dir="build/classes/client"/>
-        <mkdir dir="build/classes/full-plain"/>
-        <mkdir dir="build/classes/full-proguard"/>
-        <mkdir dir="build/classes/stub-plain"/>
-        <mkdir dir="build/classes/stub-proguard"/>
-        <mkdir dir="build/classes/tiny-plain"/>
-        <mkdir dir="build/classes/tiny-proguard"/>
-    </target>
-
-    <target name="build-full-plain"
-            depends="ext-javacard,build-dirs">
-        <!-- Compile code -->
-        <javac srcdir="applet-full/src/main/java"
-               destdir="build/classes/full-plain"
-               classpath="${jckit}/lib/api.jar"
-               includeantruntime="false"
-               source="1.5" target="1.5">
-            <compilerarg value="-Xlint"/>
-            <compilerarg value="-Xlint:-options"/>
-            <compilerarg value="-Xlint:-serial"/>
-        </javac>
-        <!-- Plain CAP file -->
-        <javacard jckit="${jckit}">
-            <cap output="build/javacard/openjavacard-ndef-full-plain.cap"
-                 jar="build/javacard/openjavacard-ndef-full-plain.jar"
-                 classes="build/classes/full-plain"
+    <target name="build-full">
+        <javacard jckit="${sdk.jc222}">
+            <cap output="build/javacard/openjavacard-ndef-full.cap"
+                 jar="build/javacard/openjavacard-ndef-full.jar"
+                 classes="build/classes/full"
+                 sources="applet-full/src/main/java"
                  aid="D276000177100211010001"
                  version="0.0">
                 <applet aid="D27600017710021101000101"
@@ -88,114 +61,12 @@
         </javacard>
     </target>
 
-    <target name="build-full-proguard"
-            depends="ext-javacard,ext-proguard,build-full-plain">
-        <!-- Run the class files through proguard -->
-        <proguard>
-            -verbose
-            -printseeds
-            -printusage
-            -ignorewarnings
-            -applymapping proguard-full.map
-            -injars build/classes/full-plain
-            -outjars build/classes/full-proguard
-            -printmapping build/javacard/openjavacard-ndef-full-proguard.map
-            -libraryjars ${jckit}/lib/api.jar
-            -dontwarn java.lang.Class
-            -allowaccessmodification
-            -keep public class * implements javacard.framework.Applet {
-                public static void install(byte[], short, byte);
-            }
-        </proguard>
-        <!-- Obfuscated CAP file -->
-        <javacard jckit="${jckit}">
-            <cap output="build/javacard/openjavacard-ndef-full-proguard.cap"
-                 jar="build/javacard/openjavacard-ndef-full-proguard.jar"
-                 classes="build/classes/full-proguard"
-                 aid="D276000177100211110001"
-                 version="0.0">
-                <applet aid="D27600017710021111000101"
-                        class="full.A"/>
-            </cap>
-        </javacard>
-    </target>
-
-    <target name="build-stub-plain"
-            depends="ext-javacard,build-dirs">
-        <!-- Compile code -->
-        <javac srcdir="applet-stub/src/main/java"
-               destdir="build/classes/stub-plain"
-               classpath="${jckit}/lib/api.jar"
-               includeantruntime="false"
-               source="1.5" target="1.5">
-            <compilerarg value="-Xlint"/>
-            <compilerarg value="-Xlint:-options"/>
-            <compilerarg value="-Xlint:-serial"/>
-        </javac>
-        <!-- Plain CAP file -->
-        <javacard jckit="${jckit}">
-            <cap output="build/javacard/openjavacard-ndef-stub-plain.cap"
-                 jar="build/javacard/openjavacard-ndef-stub-plain.jar"
-                 classes="build/classes/stub-plain"
-                 aid="D276000177100211020001"
-                 version="0.0">
-                <applet aid="D27600017710021102000101"
-                        class="org.openjavacard.ndef.stub.NdefApplet"/>
-            </cap>
-        </javacard>
-    </target>
-
-    <target name="build-stub-proguard"
-            depends="ext-javacard,ext-proguard,build-stub-plain">
-        <!-- Run the class files through proguard -->
-        <proguard>
-            -verbose
-            -printseeds
-            -printusage
-            -ignorewarnings
-            -injars build/classes/stub-plain
-            -outjars build/classes/stub-proguard
-            -printmapping build/javacard/openjavacard-ndef-stub-proguard.map
-            -libraryjars ${jckit}/lib/api.jar
-            -dontwarn java.lang.Class
-            -allowaccessmodification
-            -keep public class * {
-                public *;
-            }
-            -keep public interface * {
-                public *;
-            }
-        </proguard>
-        <!-- Obfuscated CAP file -->
-        <javacard jckit="${jckit}">
-            <cap output="build/javacard/openjavacard-ndef-stub-proguard.cap"
-                 jar="build/javacard/openjavacard-ndef-stub-proguard.jar"
-                 classes="build/classes/stub-proguard"
-                 aid="D276000177100211120001"
-                 version="0.0">
-                <applet aid="D27600017710021112000101"
-                        class="org.openjavacard.ndef.stub.NdefApplet"/>
-            </cap>
-        </javacard>
-    </target>
-
-    <target name="build-tiny-plain"
-            depends="ext-javacard,build-dirs">
-        <!-- Compile code -->
-        <javac srcdir="applet-tiny/src/main/java"
-               destdir="build/classes/tiny-plain"
-               classpath="${jckit}/lib/api.jar"
-               includeantruntime="false"
-               source="1.5" target="1.5">
-            <compilerarg value="-Xlint"/>
-            <compilerarg value="-Xlint:-options"/>
-            <compilerarg value="-Xlint:-serial"/>
-        </javac>
-        <!-- Plain CAP file -->
-        <javacard jckit="${jckit}">
-            <cap output="build/javacard/openjavacard-ndef-tiny-plain.cap"
-                 jar="build/javacard/openjavacard-ndef-tiny-plain.jar"
-                 classes="build/classes/tiny-plain"
+    <target name="build-tiny">
+        <javacard jckit="${sdk.jc222}">
+            <cap output="build/javacard/openjavacard-ndef-tiny.cap"
+                 jar="build/javacard/openjavacard-ndef-tiny.jar"
+                 classes="build/classes/tiny"
+                 sources="applet-tiny/src/main/java"
                  aid="D276000177100211030001"
                  version="0.0">
                 <applet aid="D27600017710021103000101"
@@ -204,34 +75,16 @@
         </javacard>
     </target>
 
-    <target name="build-tiny-proguard"
-            depends="ext-javacard,ext-proguard,build-tiny-plain">
-        <!-- Run the class files through proguard -->
-        <proguard>
-            -verbose
-            -printseeds
-            -printusage
-            -ignorewarnings
-            -applymapping proguard-tiny.map
-            -injars build/classes/tiny-plain
-            -outjars build/classes/tiny-proguard
-            -printmapping build/javacard/openjavacard-ndef-tiny-proguard.map
-            -libraryjars ${jckit}/lib/api.jar
-            -dontwarn java.lang.Class
-            -allowaccessmodification
-            -keep public class * implements javacard.framework.Applet {
-                public static void install(byte[], short, byte);
-            }
-        </proguard>
-        <!-- Obfuscated CAP file -->
-        <javacard jckit="${jckit}">
-            <cap output="build/javacard/openjavacard-ndef-tiny-proguard.cap"
-                 jar="build/javacard/openjavacard-ndef-tiny-proguard.jar"
-                 classes="build/classes/tiny-proguard"
-                 aid="D276000177100211130001"
+    <target name="build-stub">
+        <javacard jckit="${sdk.jc222}">
+            <cap output="build/javacard/openjavacard-ndef-stub.cap"
+                 jar="build/javacard/openjavacard-ndef-stub.jar"
+                 classes="build/classes/stub"
+                 sources="applet-stub/src/main/java"
+                 aid="D276000177100211020001"
                  version="0.0">
-                <applet aid="D27600017710021113000101"
-                        class="tiny.A"/>
+                <applet aid="D27600017710021102000101"
+                        class="org.openjavacard.ndef.stub.NdefApplet"/>
             </cap>
         </javacard>
     </target>
