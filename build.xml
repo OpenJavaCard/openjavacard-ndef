@@ -7,6 +7,7 @@
 
     <property name="ext.ant-javacard" value="ext/ant-javacard"/>
 
+    <property name="sdk.globalplatform" value="ext/globalplatform-exports"/>
     <property name="sdk.jc222" value="ext/javacard-sdks/jc222_kit"/>
 
     <!-- Cleanup target -->
@@ -22,6 +23,7 @@
                  classname="pro.javacard.ant.JavaCard"/>
 
         <mkdir dir="build/javacard"/>
+        <mkdir dir="build/classes/advanced"/>
         <mkdir dir="build/classes/full"/>
         <mkdir dir="build/classes/stub"/>
         <mkdir dir="build/classes/tiny"/>
@@ -29,6 +31,7 @@
 
     <!-- Build-all target -->
     <target name="build" description="Build everything" depends="prepare">
+        <antcall target="build-advanced"/>
         <antcall target="build-full"/>
         <antcall target="build-tiny"/>
         <antcall target="build-stub"/>
@@ -45,6 +48,22 @@
         <copy todir="prebuilt">
             <fileset dir="build/javacard"/>
         </copy>
+    </target>
+
+    <target name="build-advanced">
+        <javacard jckit="${sdk.jc222}">
+            <cap output="build/javacard/openjavacard-ndef-advanced.cap"
+                 jar="build/javacard/openjavacard-ndef-advanced.jar"
+                 classes="build/classes/advanced"
+                 sources="applet-advanced/src/main/java"
+                 aid="D276000177100211040001"
+                 version="0.0">
+                <applet aid="D27600017710021104000101"
+                        class="org.openjavacard.ndef.advanced.NdefApplet"/>
+                <import jar="${sdk.globalplatform}/org.globalplatform-1.1/gpapi-globalplatform.jar"
+                        exps="${sdk.globalplatform}/org.globalplatform-1.1/exports"/>
+            </cap>
+        </javacard>
     </target>
 
     <target name="build-full">
