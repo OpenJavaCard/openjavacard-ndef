@@ -21,6 +21,15 @@ You can follow us on [Twitter](https://twitter.com/openjavacardorg) and chat wit
 * [Installation Guide](doc/install.md)
 * [Protocol Reference](doc/protocol.md)
 
+### Variants
+
+| Name         | Description                                    | Status       |
+| ------------ | ---------------------------------------------- | ------------ |
+| full         | Full features (configured on install)          | Stable       |
+| tiny         | Tiny feature set (read-only, static content)   | Stable       |
+| advanced     | Full plus GlobalPlatform features              | Experiment   |
+| stub         | Stub backed by another service                 | Experiment   |
+
 ### Features
 
  * Decent code quality
