@@ -9,7 +9,9 @@ import javax.smartcardio.CardException;
 import javax.smartcardio.CommandAPDU;
 import javax.smartcardio.ResponseAPDU;
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class NdefClient {
 
@@ -51,6 +53,10 @@ public class NdefClient {
 
     public NdefCapabilities getCapabilities() {
         return mCapabilities;
+    }
+
+    public List<NdefFile> getFiles() {
+        return new ArrayList<>(mCapabilities.files);
     }
 
     public boolean detect() {
