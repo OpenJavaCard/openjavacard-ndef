@@ -13,20 +13,22 @@
     <!-- Cleanup target -->
     <target name="clean" description="Delete build output">
         <delete dir="build"/>
+        <delete dir="ext/ant-javacard"/>
     </target>
 
     <!-- Prepare build tools and directories -->
     <target name="prepare" description="Prepare build">
-        <ant dir="ext/ant-javacard"/>
-        <taskdef name="javacard"
-                 classpath="${ext.ant-javacard}/ant-javacard.jar"
-                 classname="pro.javacard.ant.JavaCard"/>
-
         <mkdir dir="build/javacard"/>
         <mkdir dir="build/classes/advanced"/>
         <mkdir dir="build/classes/full"/>
         <mkdir dir="build/classes/stub"/>
         <mkdir dir="build/classes/tiny"/>
+        <mkdir dir="ext/ant-javacard"/>
+
+        <get src="https://github.com/martinpaljak/ant-javacard/releases/latest/download/ant-javacard.jar" dest="ext/ant-javacard/ant-javacard.jar" skipexisting="true"/>
+        <taskdef name="javacard"
+                 classpath="${ext.ant-javacard}/ant-javacard.jar"
+                 classname="pro.javacard.ant.JavaCard"/>
     </target>
 
     <!-- Build-all target -->
