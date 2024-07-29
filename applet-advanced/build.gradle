@@ -1,0 +1,37 @@
+version '1.0'
+
+def outputCapName = "${rootProject.name}.${project.name}-${this.version}.cap"
+def outputCapFile = file("${project.buildDir}/javacard/${outputCapName}")
+def cardReaderName = localProperties.get('jc.reader')
+
+def installArgs = [
+        '-r', cardReaderName
+]
+
+
+javacard {
+    defaultKey this.defaultKey
+    config {
+        jckit jcHome
+        debugGpPro true
+        addImplicitJcardSim false
+        addImplicitJcardSimJunit false
+        installGpProArgs = installArgs as List<String>
+        cap {
+            packageName "${this.group}.${rootProject.name}.${variant}" // 'xyz.wendland.javacard.pki.isoapplet'
+            version this.version
+            aid 'D276000085100211040001'
+            output outputCapName
+            applet {
+                className 'NdefApplet'
+                aid "D2760000850101"
+            }
+        }
+    }
+
+    key {
+        enc defaultKey
+        kek defaultKey
+        mac defaultKey
+    }
+}

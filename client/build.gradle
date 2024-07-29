@@ -1,0 +1,12 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+dependencies {
+    implementation rootProject.project(':ext:openjavacard-tools:common')
+}
+
+application {
+    mainClassName = 'org.openjavacard.ndef.client.Main'
+}

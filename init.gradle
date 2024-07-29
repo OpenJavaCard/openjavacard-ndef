@@ -1,0 +1,8 @@
+subprojects {
+    //required to fix gradle version compatibility issue
+    if (project.name == ':openjavacard-tools') {
+        project.tasks.withType(jar) {
+            def baseName = 'openjavacard-tools'
+        }
+    }
+}

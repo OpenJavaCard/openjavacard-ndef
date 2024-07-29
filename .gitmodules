@@ -8,3 +8,6 @@
 [submodule "ext/globalplatform-exports"]
 	path = ext/globalplatform-exports
 	url = https://github.com/OpenJavaCard/globalplatform-exports.git
+[submodule "ext/openjavacard-tools"]
+	path = ext/openjavacard-tools
+	url = https://github.com/OpenJavaCard/openjavacard-tools.git
