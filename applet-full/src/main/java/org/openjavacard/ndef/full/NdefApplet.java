@@ -546,7 +546,7 @@ public final class NdefApplet extends Applet {
 
         // file limit checks
         short limit = (short)(offset + lc);
-        if(limit < 0 || limit >= file.length) {
+        if(limit < 0 || limit > file.length) {
             ISOException.throwIt(ISO7816.SW_WRONG_LENGTH);
         }
 
